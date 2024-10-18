@@ -1,4 +1,4 @@
--- SQLBook: Code
+-- Criação da base de dados e das tabelas com as suas relações
 DROP DATABASE IF EXISTS gestao_receitas;
 CREATE DATABASE gestao_receitas;
 use gestao_receitas;
@@ -28,11 +28,11 @@ CREATE TABLE categorias_receitas (
 CREATE TABLE receitas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    autor INT NOT NULL,
+    autor INT NOT NULL DEFAULT 1,
     ingredientes INT NOT NULL,
     categoria INT NOT NULL,
     descricao VARCHAR(255) NOT NULL,
-    dificuldade ENUM('Fácil', 'Médio', 'Difícil') NOT NULL,
+    dificuldade ENUM('Fácil', 'Média', 'Difícil') NOT NULL,
     tempo TIME NOT NULL,
     custo DECIMAL(10,2) NOT NULL,
     CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -41,7 +41,7 @@ CREATE TABLE receitas (
     FOREIGN KEY (ingredientes) REFERENCES ingredientes(id),
     FOREIGN KEY (categoria) REFERENCES categorias_receitas(id)
 );
-
+-- tabela pivot necessária porque muitos ingredientes podem estar associados a muitas receitas e vice-versa
 CREATE TABLE ingredientes_receitas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_ingrediente INT NOT NULL,
@@ -52,3 +52,4 @@ CREATE TABLE ingredientes_receitas (
     FOREIGN KEY (id_ingrediente) REFERENCES ingredientes(id),
     FOREIGN KEY (id_receita) REFERENCES receitas(id)
 );
+INSERT INTO utilizadores (nome) VALUES ('unknown');
