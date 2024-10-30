@@ -1,8 +1,8 @@
-import fs from 'fs';
-import fetch from 'node-fetch';
+const fs = require('fs');
+const fetch = require('node-fetch');
 
 const url = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
-const locF = "datasetIngredientPriced.json";
+const locF = "db/datasetIngredientPriced.json";
 
 function givePrice(json) {
     for (let ingredient of json.meals) {
