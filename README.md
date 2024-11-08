@@ -1,3 +1,18 @@
+# How to run the project
+
+### Fill .env file
+- Secret Key
+- etc
+
+### Intall all npm packages
+`npm install --save`
+
+### Start the server
+- Using nodemon *(for developing)*:
+`nodemon server`
+- Using node:
+`node server`
+
 # Recipe Management Web Server
 
 The objective of this project is to give the possibility to someone to have their own Web Site that can manage a variaty of recipes.
