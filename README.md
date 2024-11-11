@@ -1,8 +1,11 @@
 # How to run the project
 
 ### Fill .env file
-- Secret Key
-- etc
+- PORT (default = 8800)
+- DB_NAME
+- DB_USER
+- DB_PASSWORD
+- FIREBASE_APIKEY
 
 ### Intall all npm packages
 `npm install --save`
