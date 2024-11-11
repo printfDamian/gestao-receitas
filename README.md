@@ -9,9 +9,9 @@
 
 ### Start the server
 - Using nodemon *(for developing)*:
-`nodemon server`
+`nodemon app`
 - Using node:
-`node server`
+`node app`
 
 # Recipe Management Web Server
 

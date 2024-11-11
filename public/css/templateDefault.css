@@ -1,0 +1,28 @@
+/* Temp */
+body {
+    margin: 0;
+    color: black;
+    background-color: rgb(221, 221, 221);
+}
+
+.upperNavBar {
+    
+}
+
+.upperNavBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f39342;
+    color: white;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+#navLogo {
+    
+}
