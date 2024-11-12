@@ -9,6 +9,6 @@ router.post('/login', userController.login);
 
 router.get("*", (req, res) => {
 
-    res.sendFile(path.join(__dirname, "../public/erro.html"));
+    res.sendFile(path.join(__dirname, "../public/views/erro.html"));
 });
 module.exports = router;

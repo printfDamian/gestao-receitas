@@ -4,6 +4,7 @@ const ejs = require("ejs");
 const fs = require("fs");
 let path = require("path");
 
+
 const pathToTemplate = path.join(__dirname, "../templates/htmlTemplate.html");
 
 // Home page route
