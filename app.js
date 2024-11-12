@@ -17,7 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes / Endpoints
 const index = require('./routes/index');
-app.use('/', index);    
+app.use(index);    
+
+const routes = require('./routes/routes');
+app.use(routes);
+
 
 console.log("Server running on http://localhost:" + port);
 app.listen(port);
