@@ -1,19 +1,20 @@
-const express = require("express");
-const router = express.Router();
-const ejs = require("ejs");
+var express = require("express");
+var router = express.Router();
+var path = require("path");
 const fs = require("fs");
-let path = require("path");
+const ejs = require("ejs");
+const userController = require('../controllers/userController'); 
 
 const pathToTemplate = path.join(__dirname, "../templates/htmlTemplate.html");
 
-// Home page route
-router.get("/", (req, res) => {
 
-    fs.readFile(__dirname + "/../public/views/index.html", "utf8", (err, data) => {
+
+router.get('/loginPage', (req, res) => {
+    fs.readFile(__dirname + "/../public/views/login.html", "utf8", (err, data) => {
         if (err) res.status(500).send(err.message);
         
         ejs.renderFile(pathToTemplate, {
-            docTitle: "GR - Home",
+            docTitle: "GR - Register",
             upperNavBar: true,
             content: data,
             footer: true
@@ -27,4 +28,6 @@ router.get("/", (req, res) => {
         });
     });
 });
+router.post('/register', userController.login);
+
 module.exports = router;

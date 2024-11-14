@@ -22,6 +22,15 @@ app.use(index);
 const routes = require('./routes/routes');
 app.use(routes);
 
+const register = require('./routes/register');
+app.use(register);
+
+const login = require('./routes/login');
+app.use(login);
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/views/erro.html"));
+});
 
 console.log("Server running on http://localhost:" + port);
 app.listen(port);
