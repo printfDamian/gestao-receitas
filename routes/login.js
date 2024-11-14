@@ -14,7 +14,7 @@ router.get('/loginPage', (req, res) => {
         if (err) res.status(500).send(err.message);
         
         ejs.renderFile(pathToTemplate, {
-            docTitle: "GR - Register",
+            docTitle: "GR - Login",
             upperNavBar: true,
             content: data,
             footer: true
