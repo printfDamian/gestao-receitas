@@ -4,8 +4,6 @@ const app = express();
 const fs = require('fs');
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
-const { User, sequelize } = require('./models/User');
-
 const sequelizeInstance = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: 'localhost',
   dialect: 'mysql',
@@ -26,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 // Synchronize models
 sequelizeInstance.sync()
   .then(() => {
-    console.log('Database & tables created!');
+    console.log('Models synced');
   });
 
 // Routes / Endpoints

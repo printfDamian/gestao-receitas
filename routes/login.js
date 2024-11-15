@@ -28,6 +28,6 @@ router.get('/loginPage', (req, res) => {
         });
     });
 });
-router.post('/register', userController.login);
+router.post('/login', userController.login);
 
 module.exports = router;
