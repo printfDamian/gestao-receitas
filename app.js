@@ -35,6 +35,7 @@ app.use(index);
 
 const register = require('./routes/register');
 app.use(register);
+
 const login = require('./routes/login');
 app.use(login);
 
