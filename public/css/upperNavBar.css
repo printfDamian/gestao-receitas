@@ -1,0 +1,50 @@
+.upperNavBar {
+    font-size: x-large;
+    background-color: #f39342;
+    overflow: hidden;
+    height: 70px;
+}
+
+.upperNavBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 100%;
+}
+
+.upperNavBar ul li {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background: #f39342;
+    transition: background .3s;
+}
+
+.upperNavBar a {
+    color: white;
+    text-decoration: none;
+}
+
+.upperNavBar svg {
+    height: min-content;
+}
+
+#navLogo {
+    width: 150px;
+    margin: -30px 0 -40px 0;
+}
+
+#searchIcon {
+    width: 40px;
+}
+
+.upperNavBar ul li:hover {
+    background: #bd6218;
+}

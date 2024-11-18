@@ -15,12 +15,12 @@ const sequelizeInstance = new Sequelize(
     }
 );
 
-let contador = [];
 // App Config
 const port = process.env.PORT || 8800;
 
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, "./public")));
+app.use("/css", express.static("./node_modules/bootstrap/dist/css"));
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
