@@ -19,7 +19,6 @@ exports.register = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
-
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
