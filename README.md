@@ -11,10 +11,12 @@
 `npm install --save`
 
 ### Start the server
-- Using nodemon *(for developing)*:
+- Using nodemon *(for debug)*:
 `nodemon app`
 - Using node:
 `node app`
+
+Add `--sync` if you want a connection with the DB
 
 # Recipe Management Web Server
 The objective of this project is to give the possibility to someone to have their own Web Site that can manage a variaty of recipes.
