@@ -30,9 +30,26 @@ router.get("/", (req, res) => {
         });
     });
 });
-
-router.get('/dashboard', verifyToken, (req, res) => {
-    res.render('dashboard', { userId: req.userId });
+router.get("/dashboard",verifyToken, (req, res) => {
+    fs.readFile(path.join(__dirname, "../public/views/dashboard.html"), "utf8", (err, data) => {
+        if (err) {
+            return res.status(500).send(err.message);
+        }
+        
+        ejs.renderFile(pathToTemplate, {
+            docTitle: "GR - dashboard",
+            upperNavBar: true,
+            content: data,
+            footer: true
+        }, (err, str) => {
+            if (err) {
+                return res.status(500).send(err.message);
+            } else {
+                res.status(200).send(str);
+            }
+        });
+    });
 });
+
 
 module.exports = router;
