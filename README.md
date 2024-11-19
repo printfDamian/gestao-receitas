@@ -36,3 +36,8 @@ Gives the possibility to the user of giving a star (mark as favorite) to a recip
 - *André Silva*
 - *Gonçalo Ferreira*
 - *Samuel Santos*
+
+### Account
+ **email:** admin@gmail.com
+ **password**: Admin.123
+

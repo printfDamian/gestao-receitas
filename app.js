@@ -3,6 +3,7 @@ const path = require("path");
 const app = express();
 const fs = require("fs");
 require("dotenv").config();
+const session = require('express-session');
 const { Sequelize } = require("sequelize");
 const sequelizeInstance = new Sequelize(
     process.env.DB_NAME,
@@ -32,6 +33,12 @@ if (process.argv.includes("--sync")) {
 		console.log("Models synced");
 	});
 }
+//Session config
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+  }));
 
 // Routes / Endpoints
 const index = require("./routes/index");

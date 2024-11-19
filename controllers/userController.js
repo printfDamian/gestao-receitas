@@ -1,6 +1,9 @@
 const { auth } = require('../firebase');
 const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
 const { User } = require('../models/User');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 exports.register = async (req, res) => {
     try {
@@ -13,12 +16,21 @@ exports.register = async (req, res) => {
             email: firebaseUser.email,
             name: req.body.name
         });
-        
-        res.status(201).json(user);
+
+        const token = await firebaseUser.getIdToken();
+
+        // Generate JWT
+        const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
+        // Store JWT in session
+        req.session.token = jwtToken;
+
+        res.redirect('/dashboard'); // Redirect to the dashboard page
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.redirect('/registerPage?error=' + encodeURIComponent(err.message));
     }
 };
+
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -33,9 +45,17 @@ exports.login = async (req, res) => {
                 name: firebaseUser.displayName || ''
             });
         }
+
         const token = await firebaseUser.getIdToken();
-        res.json({ user, token });
+
+        // Generate JWT
+        const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
+        // Store JWT in session
+        req.session.token = jwtToken;
+
+        res.redirect('/dashboard'); // Redirect to the dashboard page
     } catch (err) {
-        res.status(401).json({ message: err.message });
+        res.redirect('/loginPage?error=' + encodeURIComponent(err.message));
     }
 };

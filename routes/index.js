@@ -3,6 +3,7 @@ const ejs = require("ejs");
 const fs = require("fs");
 const path = require("path");
 const { User } = require('../models/User');
+const verifyToken = require("./verifyToken");
 
 const router = express.Router();
 
@@ -30,22 +31,8 @@ router.get("/", (req, res) => {
     });
 });
 
-// Test route to create and fetch a user
-router.get("/test-user", async (req, res) => {
-    try {
-        // Create a test user
-        const user = await User.create({
-            id: 'test-id',
-            email: 'test@example.com',
-            name: 'Test User'
-        });
-
-        // Fetch the user
-        const fetchedUser = await User.findByPk('test-id');
-        res.json(fetchedUser);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+router.get('/dashboard', verifyToken, (req, res) => {
+    res.render('dashboard', { userId: req.userId });
 });
 
 module.exports = router;
