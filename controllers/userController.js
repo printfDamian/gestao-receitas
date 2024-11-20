@@ -22,8 +22,9 @@ exports.register = async (req, res) => {
         // Generate JWT
         const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
 
-        // Store JWT in session
+        // Store JWT and user data in session
         req.session.token = jwtToken;
+        req.session.user = user;
 
         res.redirect('/dashboard'); // Redirect to the dashboard page
     } catch (err) {
@@ -51,8 +52,9 @@ exports.login = async (req, res) => {
         // Generate JWT
         const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
 
-        // Store JWT in session
+        // Store JWT and user data in session
         req.session.token = jwtToken;
+        req.session.user = user;
 
         res.redirect('/dashboard'); // Redirect to the dashboard page
     } catch (err) {

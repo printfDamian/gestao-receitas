@@ -30,17 +30,19 @@ router.get("/", (req, res) => {
         });
     });
 });
-router.get("/dashboard",verifyToken, (req, res) => {
-    fs.readFile(path.join(__dirname, "../public/views/dashboard.html"), "utf8", (err, data) => {
+router.get("/dashboard", verifyToken, (req, res) => {
+    const user = req.session.user; // Retrieve user data from session
+    fs.readFile(path.join(__dirname, "../public/views/dashboard.ejs"), "utf8", (err, data) => {
         if (err) {
             return res.status(500).send(err.message);
         }
         
         ejs.renderFile(pathToTemplate, {
-            docTitle: "GR - dashboard",
+            docTitle: "GR - Dashboard",
             upperNavBar: true,
             content: data,
-            footer: true
+            footer: true,
+            user: user // Pass user data to the template
         }, (err, str) => {
             if (err) {
                 return res.status(500).send(err.message);
