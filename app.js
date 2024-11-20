@@ -16,6 +16,10 @@ const sequelizeInstance = new Sequelize(
     }
 );
 
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'public/views'));
+
 // App Config
 const port = process.env.PORT || 8800;
 
@@ -27,30 +31,43 @@ app.use("/css", express.static("./node_modules/bootstrap/dist/css"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Synchronize models
-if (process.argv.includes("--sync")) {
-	sequelizeInstance.sync({ force: true }).then(() => {
-		console.log("Models synced");
-	});
-}
-//Session config
+// Session Configuration
 app.use(session({
     secret: 'your_secret_key',
     resave: false,
     saveUninitialized: true
-  }));
+}));
+
+// Synchronize models
+if (process.argv.includes("--sync")) {
+    sequelizeInstance.sync({ force: true }).then(() => {
+        console.log("Models synced");
+    });
+}
+
+// Test database connection
+sequelizeInstance.authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
 
 // Routes / Endpoints
-const index = require("./routes/index");
+const index = require('./routes/index');
 app.use(index);
 
-const register = require("./routes/register");
+const register = require('./routes/register');
 app.use(register);
 
-const login = require("./routes/login");
+const login = require('./routes/login');
 app.use(login);
 
-const routes = require("./routes/routes");
+const dashboard = require('./routes/dashboard');
+app.use(dashboard);
+
+const routes = require('./routes/routes');
 app.use(routes);
 
 app.listen(port);
