@@ -14,12 +14,12 @@ const agent = new https.Agent({
     rejectUnauthorized: false
 });
 
-router.get("/recipes",async (req, res) => {
-        const response = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=", { httpsAgent: agent });
-        const meals = response.data.meals;
-        res.render("recipe", {
-            meals: meals,
-        });
+router.get("/categories",async (req, res) => {
+    const response = await axios.get("HTTP://www.themealdb.com/api/json/v1/1/categories.php", { httpsAgent: agent });
+    const categories = response.data.categories;
+    res.render("category", {
+        categories: categories,
+    });
+    console.log(categories);
 });
-
 module.exports = router;

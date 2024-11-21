@@ -41,3 +41,16 @@ Gives the possibility to the user of giving a star (mark as favorite) to a recip
  **email:** admin@gmail.com
  **password**: Admin.123
 
+## Code stuff
+
+**show logout if logged in**:
+<% if (user) { %>
+<li><a href="/logout">Logout</a></li>
+<% } %>   
+
+
+## Api stuff
+**Show categories**
+www.themealdb.com/api/json/v1/1/categories.php
+**filter by category**
+www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
