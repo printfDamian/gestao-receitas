@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GR - Dashboard</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/upperNavBar.css">
+    <link rel="stylesheet" href="/css/templateDefault.css">
+    <link rel="icon" type="image/x-icon" href="/images/GR-Logo.png">
+</head>
+<body>
+    <nav class="upperNavBar">
+        <ul>
+            <li>
+                <a href="/"><img id="navLogo" alt="GR - Logo" src="/images/GR-Logo.svg" /></a>
+            </li>
+            <ul>    
+                <li><a href="/recipes">Recipes</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li>
+                    <img id="searchIcon" src="/images/searchIcon.svg" alt="Search">
+                </li>
+            </ul>
+            <ul>
+                <li><a href="/loginPage">Login</a></li>
+                <li><a href="/registerPage">Register</a></li>
+                <% if (user) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
+            </ul>
+        </ul>
+    </nav>
+
+    <content>
+        <h1>Welcome to the dashboard, <%= user.name %></h1>
+        <p>Successfully logged in</p>
+    </content>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
