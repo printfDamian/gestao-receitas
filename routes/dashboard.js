@@ -1,14 +1,16 @@
 const express = require("express");
-const path = require("path");
 const verifyToken = require("./verifyToken");
-
 const router = express.Router();
+//const path = require("path");
 
 router.get("/dashboard", verifyToken, (req, res) => {
-    const user = req.session.user; // Retrieve user data from session
+    const user = req.session.user; 
     res.render("dashboard", {
-        user: user // Pass user data to the template
+        user: user 
     });
+    console.log("User: ", user.id);
 });
+
+
 
 module.exports = router;

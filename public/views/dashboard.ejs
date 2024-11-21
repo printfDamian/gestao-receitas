@@ -26,7 +26,11 @@
             </ul>
             <ul>
                 <li><a href="/loginPage">Login</a></li>
+                <% if (user) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
                 <li><a href="/registerPage">Register</a></li>
+                
             </ul>
         </ul>
     </nav>
