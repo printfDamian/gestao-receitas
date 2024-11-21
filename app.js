@@ -67,6 +67,9 @@ app.use(login);
 const dashboard = require('./routes/dashboard');
 app.use(dashboard);
 
+const recipe = require('./routes/recipe');
+app.use(recipe);
+
 const routes = require('./routes/routes');
 app.use(routes);
 
