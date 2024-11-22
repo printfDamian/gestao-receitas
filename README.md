@@ -54,3 +54,9 @@ Gives the possibility to the user of giving a star (mark as favorite) to a recip
 www.themealdb.com/api/json/v1/1/categories.php
 **filter by category**
 www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
+
+## content within content
+
+content: ejs.renderFile(path.join(__dirname, "public\views\indexLoggedIn.ejs"), (err, str) => {
+                    return str;
+                }),

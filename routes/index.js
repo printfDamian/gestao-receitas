@@ -25,7 +25,9 @@ router.get("/", (req, res) => {
                 docTitle: "GR - Home",
                 upperNavBar: true,
                 upperNavBarLogin: false,
-                content: data,
+                content: ejs.renderFile(path.join(__dirname, "public\views\indexLoggedIn.ejs"), (err, str) => {
+                    return str;
+                }),
                 footer: true
             }, (err, str) => {
                 if (err) {
