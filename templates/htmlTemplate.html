@@ -15,6 +15,11 @@
     <% if (upperNavBar) { %>
         <%- include('upperNavBar.html') %>
     <% } %>
+    <% if (typeof upperNavBatLogin !== 'undefined') { %>
+        <% if (upperNavBarLogin) {%>
+            <% include('upperNavBarLogin.ejs') %>
+        <% } %>   
+    <% } %>
 
     <%- content %>
     

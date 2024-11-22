@@ -70,6 +70,9 @@ app.use(dashboard);
 const recipe = require('./routes/recipe');
 app.use(recipe);
 
+const category = require('./routes/category');
+app.use(category);
+
 const routes = require('./routes/routes');
 app.use(routes);
 
