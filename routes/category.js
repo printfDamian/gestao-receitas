@@ -19,15 +19,28 @@ router.get("/categories",async (req, res) => {
     const categories = response.data.categories;
     const user = req.session.user; 
     if(user){
-        res.render("category", {
+        res.render("categories", {
             categories: categories,
             user: user
         });
     }else{
-        res.render("category", {
+        res.render("categories", {
         categories: categories,
     });
     }
-    
+});
+
+router.get("/category/:category", async (req, res) => {
+    try {
+        const response = await axios.get("https://www.themealdb.com/api/json/v1/1/filter.php?c=" + req.params.category, { httpsAgent: agent });
+        const meals = response.data.meals;
+        const user = req.session.user;
+        res.render("category", {
+            meals: meals,
+            user: user
+        });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 module.exports = router;

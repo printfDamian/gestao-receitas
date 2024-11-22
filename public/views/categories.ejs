@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GR - Category</title>
+    <title>GR - Categories</title>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/upperNavBar.css">
@@ -46,36 +46,23 @@
     </nav>
 
     <div class="container mt-5">
-        <% if (meals && meals.length > 0) { %>
+        <% if (categories && categories.length > 0) { %>
             <div class="row">
-                <% meals.forEach(meal => { %>
+                <% categories.forEach(category => { %>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="<%= meal.strMealThumb %>" class="card-img-top" alt="<%= meal.strMeal %>">
+                            <img src="<%= category.strCategoryThumb %>" class="card-img-top" alt="<%= category.strCategory %>">
                             <div class="card-body">
-                                <h5 class="card-title"><%= meal.strMeal %></h5>
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#details<%= meal.idMeal %>" aria-expanded="false" aria-controls="details<%= meal.idMeal %>">
-                                    More Details
-                                </button>
-                                <div class="collapse mt-2" id="details<%= meal.idMeal %>">
-                                    <p class="card-text"><%= meal.strInstructions %></p>
-                                    <h6>Ingredients:</h6>
-                                    <ul class="list-group list-group-flush">
-                                        <% for (let i = 1; i <= 20; i++) { %>
-                                            <% if (meal[`strIngredient${i}`]) { %>
-                                                <li class="list-group-item"><%= meal[`strIngredient${i}`] %> - <%= meal[`strMeasure${i}`] %></li>
-                                            <% } %>
-                                        <% } %>
-                                    </ul>
-                                    <a href="<%= meal.strYoutube %>" class="btn btn-secondary mt-2">Watch on YouTube</a>
-                                </div>
+                                <h5 class="card-title"><%= category.strCategory %></h5>
+                                <p class="card-text"><%= category.strCategoryDescription.substring(0, 100) %>...</p>
+                                    <a href="/category/<%= category.strCategory %>" class="btn btn-warning text-white">View Recipes</a>
                             </div>
                         </div>
                     </div>
                 <% }) %>
             </div>
         <% } else { %>
-            <p>No meals found.</p>
+            <p>No categories found.</p>
         <% } %>
     </div>
 
