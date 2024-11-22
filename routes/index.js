@@ -15,19 +15,27 @@ router.get("/", (req, res) => {
         if (err) {
             return res.status(500).send(err.message);
         }
+        const user = req.session.user;
+        if(user){
+            res.render("indexLoggedIn", {
+                user: user
+            }); 
+        }else{
+            ejs.renderFile(pathToTemplate, {
+                docTitle: "GR - Home",
+                upperNavBar: true,
+                upperNavBarLogin: false,
+                content: data,
+                footer: true
+            }, (err, str) => {
+                if (err) {
+                    return res.status(500).send(err.message);
+                } else {
+                    res.status(200).send(str);
+                }
+            });  
+        }
         
-        ejs.renderFile(pathToTemplate, {
-            docTitle: "GR - Home",
-            upperNavBar: true,
-            content: data,
-            footer: true
-        }, (err, str) => {
-            if (err) {
-                return res.status(500).send(err.message);
-            } else {
-                res.status(200).send(str);
-            }
-        });
     });
 });
 

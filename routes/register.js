@@ -14,6 +14,7 @@ router.get('/registerPage', (req, res) => {
         ejs.renderFile(pathToTemplate, {
             docTitle: "GR - Register",
             upperNavBar: true,
+            upperNavBarLogin: false,
             content: data,
             footer: true
         },

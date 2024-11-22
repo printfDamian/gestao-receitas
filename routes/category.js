@@ -8,7 +8,7 @@ const router = express.Router();
 
 const pathToTemplate = path.join(__dirname, "../templates/htmlTemplate.html");
 
-// Disable SSL verification for axios
+// Disable SSL verification so that the API link is acessed without trouble
 const https = require('https');
 const agent = new https.Agent({
     rejectUnauthorized: false
@@ -17,9 +17,17 @@ const agent = new https.Agent({
 router.get("/categories",async (req, res) => {
     const response = await axios.get("HTTP://www.themealdb.com/api/json/v1/1/categories.php", { httpsAgent: agent });
     const categories = response.data.categories;
-    res.render("category", {
+    const user = req.session.user; 
+    if(user){
+        res.render("category", {
+            categories: categories,
+            user: user
+        });
+    }else{
+        res.render("category", {
         categories: categories,
     });
-    console.log(categories);
+    }
+    
 });
 module.exports = router;

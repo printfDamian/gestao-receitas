@@ -16,6 +16,11 @@
         <%- include('upperNavBar.html') %>
     <% } %>
 
+    <% if (upperNavBarLogin) {%>
+        <% include('upperNavBarLogin.ejs') %>
+    <% } %>   
+
+
     <%- content %>
     
     <% if (footer) { %>
