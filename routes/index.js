@@ -11,33 +11,11 @@ const pathToTemplate = path.join(__dirname, "../templates/htmlTemplate.html");
 
 // Home page route
 router.get("/", (req, res) => {
-    fs.readFile(path.join(__dirname, "../public/views/index.html"), "utf8", (err, data) => {
-        if (err) {
-            return res.status(500).send(err.message);
-        }
-        const user = req.session.user;
-        if(user){
-            res.render("indexLoggedIn", {
-                user: user
-            }); 
-        }else{
-            ejs.renderFile(pathToTemplate, {
-                docTitle: "GR - Home",
-                upperNavBar: true,
-                content: ejs.renderFile(path.join(__dirname, "public\views\indexLoggedIn.ejs"), (err, str) => {
-                    return str;
-                }),
-                footer: true
-            }, (err, str) => {
-                if (err) {
-                    return res.status(500).send(err.message);
-                } else {
-                    res.status(200).send(str);
-                }
-            });  
-        }
-        
-    });
+    const user = req.session.user;
+    res.render("indexLoggedIn", {
+        user: user,
+        docTitle: "GR - Home"
+    }); 
 });
 
 

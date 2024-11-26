@@ -6,9 +6,6 @@ const path = require("path");
 
 
 router.get("/dashboard", verifyToken, (req, res) => {
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
     const user = req.session.user; 
     res.render("dashboard", {
         docTitle: "GR - Dashboard",
