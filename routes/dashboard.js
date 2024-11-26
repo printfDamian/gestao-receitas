@@ -10,6 +10,7 @@ router.get("/dashboard", verifyToken, (req, res) => {
     res.render("dashboard", {
         docTitle: "GR - Dashboard",
         user: user 
+        // idea for the future to do the active tab send a variabel in here
     });
 });
 
