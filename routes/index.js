@@ -24,7 +24,6 @@ router.get("/", (req, res) => {
             ejs.renderFile(pathToTemplate, {
                 docTitle: "GR - Home",
                 upperNavBar: true,
-                upperNavBarLogin: false,
                 content: ejs.renderFile(path.join(__dirname, "public\views\indexLoggedIn.ejs"), (err, str) => {
                     return str;
                 }),

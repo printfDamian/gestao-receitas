@@ -16,7 +16,6 @@ router.get('/loginPage', (req, res) => {
         ejs.renderFile(pathToTemplate, {
             docTitle: "GR - Login",
             upperNavBar: true,
-            upperNavBarLogin: false,
             content: data,
             footer: true
         },
