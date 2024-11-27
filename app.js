@@ -21,6 +21,8 @@ const port = process.env.PORT || 8800;
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, "./public")));
 app.use("/css", express.static("./node_modules/bootstrap/dist/css"));
+app.use("/js", express.static("./node_modules/bootstrap/dist/js"));
+
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
