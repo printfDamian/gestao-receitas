@@ -5,6 +5,9 @@ const fs = require("fs");
 const ejs = require("ejs");
 const pathToTemplate = path.join(__dirname, "../templates/htmlTemplate.html");
 
+
+
+
 router.get('*', (req, res) => {
     fs.readFile(__dirname + "/../public/views/erro.html", "utf8", (err, data) => {
         if (err) res.status(500).send(err.message);

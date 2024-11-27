@@ -3,6 +3,7 @@ const path = require("path");
 const app = express();
 const fs = require("fs");
 require("dotenv").config();
+const session = require('express-session');
 const { Sequelize } = require("sequelize");
 const sequelizeInstance = new Sequelize(
     process.env.DB_NAME,
@@ -14,6 +15,10 @@ const sequelizeInstance = new Sequelize(
         dialectModule: require("mysql2"),
     }
 );
+
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'public/views'));
 
 // App Config
 const port = process.env.PORT || 8800;
@@ -28,24 +33,49 @@ app.use("/js", express.static("./node_modules/bootstrap/dist/js"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Session Configuration
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
+
 // Synchronize models
 if (process.argv.includes("--sync")) {
-	sequelizeInstance.sync({ force: true }).then(() => {
-		console.log("Models synced");
-	});
+    sequelizeInstance.sync({ force: true }).then(() => {
+        console.log("Models synced");
+    });
 }
 
+// Test database connection
+sequelizeInstance.authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
+
 // Routes / Endpoints
-const index = require("./routes/index");
+const index = require('./routes/index');
 app.use(index);
 
-const register = require("./routes/register");
+const register = require('./routes/register');
 app.use(register);
 
-const login = require("./routes/login");
+const login = require('./routes/login');
 app.use(login);
 
-const routes = require("./routes/routes");
+const dashboard = require('./routes/dashboard');
+app.use(dashboard);
+
+const recipe = require('./routes/recipe');
+app.use(recipe);
+
+const category = require('./routes/category');
+app.use(category);
+
+const routes = require('./routes/routes');
 app.use(routes);
 
 app.listen(port);

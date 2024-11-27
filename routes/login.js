@@ -28,6 +28,14 @@ router.get('/loginPage', (req, res) => {
         });
     });
 });
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send(err.message);
+        }
+        res.redirect('/loginPage');
+    });
+});
 router.post('/login', userController.login);
 
 module.exports = router;
