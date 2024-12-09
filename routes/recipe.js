@@ -18,17 +18,29 @@ router.get("/recipes",async (req, res) => {
         const response = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=", { httpsAgent: agent });
         const meals = response.data.meals;
         const user = req.session.user;
-        if(user){
             res.render("recipe", {
                 meals: meals,
+                docTitle: "GR - Recipes",
                 user: user
             });
-        }else{
-            res.render("recipe", {
-                meals: meals,
-            });
-        }
+        
         
 });
+router.get("/recipe/:id", async (req, res) => {
+    try {
+        const response = await axios.get("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + req.params.id, { httpsAgent: agent });
+        const meal = response.data.meals[0];
+        const user = req.session.user;
+        res.render("recipeDetails", {
+            meal: meal,
+            docTitle: "GR - " + meal.strMeal,
+            user: user
+        });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+
 
 module.exports = router;

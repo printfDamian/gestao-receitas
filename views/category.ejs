@@ -1,0 +1,37 @@
+<%- include('./modules/upperTemplate.ejs') %>
+
+    <div class="container mt-5">
+        <% if (meals && meals.length > 0) { %>
+            <div class="row">
+                <% meals.forEach(meal => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="<%= meal.strMealThumb %>" class="card-img-top" alt="<%= meal.strMeal %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= meal.strMeal %></h5>
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#details<%= meal.idMeal %>" aria-expanded="false" aria-controls="details<%= meal.idMeal %>">
+                                    More Details
+                                </button>
+                                <div class="collapse mt-2" id="details<%= meal.idMeal %>">
+                                    <p class="card-text"><%= meal.strInstructions %></p>
+                                    <h6>Ingredients:</h6>
+                                    <ul class="list-group list-group-flush">
+                                        <% for (let i = 1; i <= 20; i++) { %>
+                                            <% if (meal[`strIngredient${i}`]) { %>
+                                                <li class="list-group-item"><%= meal[`strIngredient${i}`] %> - <%= meal[`strMeasure${i}`] %></li>
+                                            <% } %>
+                                        <% } %>
+                                    </ul>
+                                    <a href="<%= meal.strYoutube %>" class="btn btn-secondary mt-2">Watch on YouTube</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No meals found.</p>
+        <% } %>
+    </div>
+
+    <%- include('./modules/bottomTemplate.ejs') %>

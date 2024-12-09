@@ -1,0 +1,12 @@
+<%- include('modules/upperTemplate.ejs') %>
+
+    <content>
+        <% if(typeof user !== 'undefined') { %>
+            <h1>Home para utilizadores logados</h1>
+            <p><b>User in session:</b> <%= user.name %>, <%= user.email %></p>
+        <% } else { %>
+            <h1>Welcome to gestor-receitas home page</h1>
+            <p>Log in for access to all the features</p>
+       <% } %>
+    </content>
+<%- include('modules/bottomTemplate.ejs') %>

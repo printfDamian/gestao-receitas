@@ -6,6 +6,7 @@
 - DB_USER
 - DB_PASSWORD
 - FIREBASE_APIKEY
+- SECRETKEY
 
 ### Intall all npm packages
 `npm install --save`
