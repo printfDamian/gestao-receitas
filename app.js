@@ -18,7 +18,7 @@ const sequelizeInstance = new Sequelize(
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'public/views'));
+app.set('views', path.join(__dirname, 'views'));
 
 // App Config
 const port = process.env.PORT || 8800;
@@ -26,6 +26,8 @@ const port = process.env.PORT || 8800;
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, "./public")));
 app.use("/css", express.static("./node_modules/bootstrap/dist/css"));
+app.use("/js", express.static("./node_modules/bootstrap/dist/js"));
+
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
@@ -33,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session Configuration
 app.use(session({
-    secret: 'your_secret_key',
+    secret: process.env.SECRETKEY,
     resave: false,
     saveUninitialized: true
 }));
@@ -43,16 +45,16 @@ if (process.argv.includes("--sync")) {
     sequelizeInstance.sync({ force: true }).then(() => {
         console.log("Models synced");
     });
-}
 
-// Test database connection
-sequelizeInstance.authenticate()
+    // Test database connection
+    sequelizeInstance.authenticate()
     .then(() => {
         console.log('Connection has been established successfully.');
     })
     .catch(err => {
         console.error('Unable to connect to the database:', err);
     });
+}
 
 // Routes / Endpoints
 const index = require('./routes/index');
