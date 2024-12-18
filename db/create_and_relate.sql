@@ -1,8 +1,8 @@
 -- Criação da base de dados e das tabelas com as suas relações
-DROP DATABASE IF EXISTS gestao_receitas1;
-CREATE DATABASE gestao_receitas1;
+DROP DATABASE IF EXISTS gestao_receitas;
+CREATE DATABASE gestao_receitas;
  --CREATE DATABASE gestao_receitas; created for the creation from the mvc structure
-use gestao_receitas1;
+use gestao_receitas;
 
 CREATE TABLE utilizadores (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -11,6 +11,15 @@ CREATE TABLE utilizadores (
     CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255)  NOT NULL,
+    CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 
 CREATE TABLE ingredientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
