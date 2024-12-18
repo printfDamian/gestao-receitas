@@ -16,9 +16,6 @@ exports.register = async (req, res) => {
             email: firebaseUser.email,
             name: req.body.name
         });
-
-        const token = await firebaseUser.getIdToken();
-
         // Generate JWT
         const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
 
@@ -29,9 +26,9 @@ exports.register = async (req, res) => {
         res.redirect('/dashboard'); // Redirect to the dashboard page
     } catch (err) {
         res.redirect('/registerPage?error=' + encodeURIComponent(err.message));
+        console.log(err);
     }
 };
-
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -47,7 +44,6 @@ exports.login = async (req, res) => {
             });
         }
 
-        const token = await firebaseUser.getIdToken();
 
         // Generate JWT
         const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
@@ -59,5 +55,10 @@ exports.login = async (req, res) => {
         res.redirect('/dashboard'); // Redirect to the dashboard page
     } catch (err) {
         res.redirect('/loginPage?error=' + encodeURIComponent(err.message));
+        console.log(err);
+    }
+    module.exports = {
+        login,
+        register
     }
 };

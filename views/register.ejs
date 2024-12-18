@@ -39,8 +39,14 @@
       />
       <label for="passwordInp">Password</label>
     </div>
+    <!-- Problemas para resolver passar isto para ejs e resolver inconsistencias -->
+    <% if (error) { %>
+      <div class="alert alert-danger" role="alert">
+          <%= error %>
+      </div>
+  <% } %>
     <a href="/loginPage">Login if you already have an account</a>
     <br>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-warning text-light">Register</button>
   </form>
 </content>

@@ -7,17 +7,17 @@ const userController = require('../controllers/userController');
 
 const pathToTemplate = path.join(__dirname, "/../views/htmlTemplate.ejs");
 
-
-
 router.get('/loginPage', (req, res) => {
-    fs.readFile(__dirname + "/../views/login.html", "utf8", (err, data) => {
+    const error = req.query.error;
+    fs.readFile(__dirname + "/../views/login.ejs", "utf8", (err, data) => {
         if (err) return res.status(500).send(err.message);
         
         ejs.renderFile(pathToTemplate, {
             docTitle: "GR - Login",
             upperNavBar: true,
             content: data,
-            footer: true
+            footer: true,
+            error: error
         },
         (err, str) => {
             if (err) {
@@ -28,6 +28,7 @@ router.get('/loginPage', (req, res) => {
         });
     });
 });
+
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -36,6 +37,7 @@ router.get('/logout', (req, res) => {
         res.redirect('/loginPage');
     });
 });
+
 router.post('/login', userController.login);
 
 module.exports = router;

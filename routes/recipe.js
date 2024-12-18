@@ -1,46 +1,34 @@
-const express = require("express");
-const axios = require("axios");
-const path = require("path");
-const ejs = require("ejs");
+var express = require("express");
+var router = express.Router();
+var path = require("path");
 const fs = require("fs");
-const verifyToken = require("./verifyToken"); // later on if you want to favorite a recipe 
-const router = express.Router();
+const ejs = require("ejs");
+const userController = require('../controllers/userController'); 
 
-const pathToTemplate = path.join(__dirname, "../templates/htmlTemplate.html");
+const pathToTemplate = path.join(__dirname, "/../views/htmlTemplate.ejs");
 
-// Disable SSL verification for axios
-const https = require('https');
-const agent = new https.Agent({
-    rejectUnauthorized: false
-});
-
-router.get("/recipes",async (req, res) => {
-        const response = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=", { httpsAgent: agent });
-        const meals = response.data.meals;
-        const user = req.session.user;
-            res.render("recipe", {
-                meals: meals,
-                docTitle: "GR - Recipes",
-                user: user
-            });
+router.get('/registerPage', (req, res) => {
+    const error = req.query.error;
+    fs.readFile(__dirname + "/../views/register.ejs", "utf8", (err, data) => {
+        if (err) return res.status(500).send(err.message);
         
-        
-});
-router.get("/recipe/:id", async (req, res) => {
-    try {
-        const response = await axios.get("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + req.params.id, { httpsAgent: agent });
-        const meal = response.data.meals[0];
-        const user = req.session.user;
-        res.render("recipeDetails", {
-            meal: meal,
-            docTitle: "GR - " + meal.strMeal,
-            user: user
+        ejs.renderFile(pathToTemplate, {
+            docTitle: "GR - Register",
+            upperNavBar: true,
+            content: data,
+            footer: true,
+            error: error
+        },
+        (err, str) => {
+            if (err) {
+                res.status(500).send(err.message);
+            } else {
+                res.status(200).send(str);
+            }
         });
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
+    });
 });
 
-
+router.post('/register', userController.register);
 
 module.exports = router;
