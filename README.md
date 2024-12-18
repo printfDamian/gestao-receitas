@@ -3,7 +3,7 @@
 - Make all the operations to the database more independent through an API
 - Enforce MVC structure
 - Make good quality and readable code
-- Improve Error Handling across al controllers and routes
+- Improve Error Handling across all controllers and routes
 - Add Logging
 - improve Security (optional)
 
