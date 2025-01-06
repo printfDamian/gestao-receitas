@@ -5,8 +5,12 @@ const fs = require("fs");
 const ejs = require("ejs");
 const pathToTemplate = path.join(__dirname, "views/htmlTemplate.ejs");
 
-
-
+router.use(require('./index'));
+router.use(require('./register'));
+router.use(require('./login'));
+router.use(require('./dashboard'));
+router.use(require('./recipe'));
+router.use(require('./category'));
 
 router.get('*', (req, res) => {
     fs.readFile(__dirname + "/views/erro.ejs", "utf8", (err, data) => {

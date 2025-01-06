@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const recipesController = require("../controllers/recipesController");
+const recipeController = require("../controllers/recipeController");
 
 
 router.get("/recipes",async (req, res) => {
-    res.send(await recipesController.getAllRecipes())
+    res.send(await recipeController.getAllRecipes())
 });
 
 router.get("/recipes/:id", async (req, res) => {
-    res.send(await recipesController.getRecipeById(req.params.id))
+    res.send(await recipeController.getRecipeById(req.params.id))
 });
 
 module.exports = router;

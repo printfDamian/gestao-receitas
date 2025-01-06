@@ -1,8 +1,4 @@
 const express = require("express");
-const ejs = require("ejs");
-const fs = require("fs");
-const path = require("path");
-const { User } = require('../models/User');
 const router = express.Router();
 
 // Home page route

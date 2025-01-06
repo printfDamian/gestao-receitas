@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require("path");
 const fs = require("fs");
 const ejs = require("ejs");
-const userController = require('../controllers/userController'); 
+const { register } = require('../controllers/userController'); 
 
 const pathToTemplate = path.join(__dirname, "/../views/htmlTemplate.ejs");
 
@@ -27,6 +27,6 @@ router.get('/registerPage', (req, res) => {
     });
 });
 
-router.post('/register', userController.register);
+router.post('/register', register);
 
 module.exports = router;
