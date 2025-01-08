@@ -7,7 +7,7 @@
 - Create a module to handle all operations related to JWT including middlewares, signs, and check functions
 
 ### controllers
-Needs more data validation (i.e. check if the email has a good format)
+Needs more data validation (i.e. check if the email has a good format) ||| ✓ Check email format done ✓
 
 ---
 

@@ -5,9 +5,20 @@ const { createUser, getUserById } = require('../models/userModel');
 
 const JWT_SECRET = process.env.SECRETKEY;
 
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
 const register = async (req, res) => {
     try {
         const { email, password, name } = req.body;
+
+        if(!validateEmail(email))
+        {
+            return -1; 
+        }
+        
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const firebaseUser = userCredential.user;
 
