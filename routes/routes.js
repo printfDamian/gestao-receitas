@@ -1,16 +1,16 @@
-var express = require("express");
-var router = express.Router();
-var path = require("path");
+const express = require("express");
+const router = express.Router();
+const path = require("path");
 const fs = require("fs");
 const ejs = require("ejs");
-const pathToTemplate = path.join(__dirname, "views/htmlTemplate.ejs");
+const pathToTemplate = path.join(__dirname, "views/templates/htmlTemplate.ejs");
 
 router.use(require('./index'));
-router.use(require('./register'));
-router.use(require('./login'));
+router.use(require('./auth/register'));
+router.use(require('./auth/login'));
 router.use(require('./dashboard'));
-router.use(require('./recipe'));
-router.use(require('./category'));
+router.use(require('./recipes/recipe'));
+router.use(require('./recipes/category'));
 
 router.get('*', (req, res) => {
     fs.readFile(__dirname + "/views/erro.ejs", "utf8", (err, data) => {

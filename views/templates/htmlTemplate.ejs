@@ -14,13 +14,13 @@
 <body>
     
     <% if (upperNavBar) { %>
-        <%- include('./modules/upperNavBar.ejs') %>
+        <%- include('../modules/upperNavBar') %>
     <% } %>
 
     <%- content %>
     
     <% if (footer) { %>
-        <%- include('./modules/footer.ejs') %>
+        <%- include('../modules/footer') %>
     <% } %>
 
     <script src="/js/bootstrap.js"></script>

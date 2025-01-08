@@ -1,8 +1,18 @@
 <content>
 
-    // Search Bar central, com as principais opções de filtragem
-    // quando o utilizador carrega no 'enter' é redirecionado para de 'Explore Recipes'
+    <%# *Não interessa se o utilizador está ou não logado* %>
 
-    // Listar 10/5 Cards em forma de lista random/sugestões horizontal com scroll
+    <%# Search Bar central, com as principais opções de filtragem %>
+    <%# quando o utilizador carrega no 'enter' é redirecionado para de 'Explore Recipes' %>
+    <div class="input-group">
+        <input class="form-control border-end-0 border rounded-pill" type="search" value="search" id="example-search-input">
+        <span class="input-group-append">
+            <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
 
+    <%# Listar 10/5 Cards em forma de lista random/sugestões horizontal com scroll %>
+    <%- include('recipes/cards/cardsScrollListContainer', { recipes: recipes }) %>
 </content>

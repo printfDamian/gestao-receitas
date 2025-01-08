@@ -29,8 +29,6 @@ app.use(session({
 }));
 
 // Routes / Endpoints
-app.use("/api", require("./routes/recipesApi"));
-
 app.use(require('./routes/routes'));
 
 app.listen(port);
