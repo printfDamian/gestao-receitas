@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require("path");
 const fs = require("fs");
 const ejs = require("ejs");
-const userController = require('../controllers/userController'); 
+const userController = require('../../controllers/userController'); 
 
 const pathToTemplate = path.join(__dirname, "/../views/htmlTemplate.ejs");
 

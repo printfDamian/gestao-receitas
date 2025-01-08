@@ -3,7 +3,7 @@ const axios = require("axios");
 const path = require("path");
 const ejs = require("ejs");
 const fs = require("fs");
-const verifyToken = require("./verifyToken"); // later on if you want to favorite a recipe 
+const verifyToken = require("../auth/verifyToken"); // later on if you want to favorite a recipe 
 const router = express.Router();
 
 const pathToTemplate = path.join(__dirname, "../templates/htmlTemplate.html");

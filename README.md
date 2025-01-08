@@ -9,6 +9,8 @@
 ### controllers
 Needs more data validation (i.e. check if the email has a good format)
 
+---
+
 # How to run the project
 
 ### Fill .env file
@@ -30,28 +32,83 @@ Needs more data validation (i.e. check if the email has a good format)
 - Using node:
 `node app`
 
+---
+
 # Recipe Management Web Server
 The objective of this project is to give the possibility to someone to have their own Web Site that can manage a variaty of recipes.
 
 ### FRAMEWORKS / TECHNOLOGIES / TOOLS
 We used **MySQL** and **Firebase** for the databases, **Node.js** as the faundation of the project, and **Express** to help us build the back-end more efficiently.
 
-### FEATURES
-1. #### Save recipes as favorite
-Gives the possibility to the user of giving a star (mark as favorite) to a recipe.
+Compreendido! Se toda a parte relacionada com receitas é gerida por uma API externa e não deve ser manipulada diretamente pela aplicação, ajustarei o mapa do website para refletir isso. Aqui está o novo mapa atualizado:
 
-2. #### Search
+### Account (For debug/testing purpuse)
+ **email:** admin@gmail.com
+ **password**: Admin.123
 
-    - #### Filter
+---
+
+### **Website Map - Recipe Management**
+
+#### **Frontoffice (End Users)**
+1. **Home Page**
+   - Highlights: Popular or new recipes (retrieved via API).
+   - Search: Search bar with filters (name, category, difficulty, etc.).
+
+2. **Explore Recipes**
+   - Recipe listing by category (starters, main courses, desserts, etc.).
+   - Additional filters (preparation time, cost, difficulty).
+   - Information is displayed from the API.
+
+3. **Recipe Details**
+   - Recipe name, image, author, ingredient list, preparation steps.
+   - Additional information: time, cost, difficulty, category.
+   - Buttons: Mark as favorite, add to a collection, share.
+   - Data is exclusively retrieved via the API.
+
+4. **Favorites and Collections**
+   - List of favorite recipes (stored in the local database).
+   - Manage personalized recipe collections.
+
+5. **User Profile**
+   - Personal information.
+   - Manage preferences (e.g., favorite categories).
+   - Logout.
+
+#### **Backoffice (Administrators)**
+1. **Dashboard**
+   - Overview: Total users, favorite recipe categories, etc.
+
+2. **Ingredient Management**
+   - List, add, edit, and delete ingredients (local, used for personalized functionalities like favorite collections).
+
+3. **Local Categories Management**
+   - List, add, edit, and delete categories (to structure collections or preferences).
+
+4. **User Management**
+   - List, add, edit, delete users.
+   - Manage permissions.
+
+#### **Extra Features**
+1. **Authentication**
+   - Login/registration (including via Google).
+   - Password recovery.
+
+2. **External API Integration**
+   - Import recipes and synchronize with the application.
+   - The API is the sole source of recipe data.
+
+3. **Advanced Search**
+   - Detailed filters: Specific ingredients, preparation time, etc. (based on API capabilities).
+
+---
 
 ### AUTHORS
 - *André Silva*
 - *Gonçalo Ferreira*
 - *Samuel Santos*
 
-### Account
- **email:** admin@gmail.com
- **password**: Admin.123
+---
 
 ## Code stuff
 
@@ -59,7 +116,6 @@ Gives the possibility to the user of giving a star (mark as favorite) to a recip
 <% if (user) { %>
 <li><a href="/logout">Logout</a></li>
 <% } %>   
-
 
 ## Api stuff
 **Show categories**

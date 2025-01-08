@@ -3,12 +3,11 @@ var router = express.Router();
 var path = require("path");
 const fs = require("fs");
 const ejs = require("ejs");
-const userController = require('../controllers/userController'); 
+const { register } = require('../../controllers/userController'); 
 
 const pathToTemplate = path.join(__dirname, "/../views/htmlTemplate.ejs");
 
 router.get('/registerPage', (req, res) => {
-    const error = req.query.error;
     fs.readFile(__dirname + "/../views/register.ejs", "utf8", (err, data) => {
         if (err) return res.status(500).send(err.message);
         
@@ -16,8 +15,7 @@ router.get('/registerPage', (req, res) => {
             docTitle: "GR - Register",
             upperNavBar: true,
             content: data,
-            footer: true,
-            error: error
+            footer: true
         },
         (err, str) => {
             if (err) {
@@ -29,6 +27,6 @@ router.get('/registerPage', (req, res) => {
     });
 });
 
-router.post('/register', userController.register);
+router.post('/register', register);
 
 module.exports = router;

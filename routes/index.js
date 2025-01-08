@@ -7,8 +7,7 @@ router.get("/", (req, res) => {
     res.render("indexLoggedIn", {
         user: user,
         docTitle: "GR - Home"
-    }); 
+    });
 });
 
-
-module.exports = router;    
+module.exports = router;
