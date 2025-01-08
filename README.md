@@ -128,3 +128,12 @@ www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
 content: ejs.renderFile(path.join(__dirname, "public\views\indexLoggedIn.ejs"), (err, str) => {
                     return str;
                 }),
+
+
+## Models
+mealModel
+categoryModel
+
+## Controller
+mealController
+categoryController
