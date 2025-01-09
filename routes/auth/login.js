@@ -5,11 +5,11 @@ const fs = require("fs");
 const ejs = require("ejs");
 const userController = require('../../controllers/userController'); 
 
-const pathToTemplate = path.join(__dirname, "/../views/htmlTemplate.ejs");
+const pathToTemplate = path.join(__dirname, "/../../views/templates/htmlTemplate.ejs");
 
 router.get('/loginPage', (req, res) => {
     const error = req.query.error;
-    fs.readFile(__dirname + "/../views/login.ejs", "utf8", (err, data) => {
+    fs.readFile(__dirname + "/../../views/auth/login.html", "utf8", (err, data) => {
         if (err) return res.status(500).send(err.message);
         
         ejs.renderFile(pathToTemplate, {
