@@ -13,7 +13,7 @@ router.use(require('./recipes/recipe'));
 router.use(require('./recipes/category'));
 
 router.get('*', (req, res) => {
-    fs.readFile(__dirname + "/views/erro.ejs", "utf8", (err, data) => {
+    fs.readFile(__dirname + "../views/erro.ejs", "utf8", (err, data) => {
         if (err) return res.status(500).send(err.message);
         
         ejs.renderFile(pathToTemplate, {
@@ -31,4 +31,6 @@ router.get('*', (req, res) => {
         });
     });
 });
+
+
 module.exports = router;

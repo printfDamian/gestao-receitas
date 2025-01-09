@@ -1,18 +1,19 @@
-const { getRandomMeal } = require("../models/mealModel");
+const axios = require("axios");
+const https = require("https");
 
-const getRandomMeals = async (nrMeals, retries) => {
-    const meals = [];
-    
-    while(meals.length < nrMeals && retries > 0) {
-        let meal = await getRandomMeal();
-        if(!meals.includes(meal)) {
-            meals.push(meal);
-        } else {
-            retries--;
-        }
-    }
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
 
-    return meals;
-}
+const getAllMeals = async () => {
+    const response = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=", { httpsAgent: agent });
+    return response.data.meals;
+};
+
+const getRandomMeals = async (nrMeals) => {
+    const allMeals = await getAllMeals();
+    const shuffled = allMeals.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, nrMeals);
+};
 
 module.exports = { getRandomMeals };

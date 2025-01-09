@@ -8,14 +8,18 @@ const htmlTemplate = path.join(__dirname, "..", "views/templates/htmlTemplate.ej
 
 // Home page route
 router.get("/", async (req, res) => {
-    res.render(htmlTemplate, {
-        docTitle: "GR - Home",
-        upperNavBar: true,
-        footer: true,
-        content: await renderFile(path.join(__dirname, "..", "views/index.ejs"), {
-            recipes: await getRandomMeals(10, 5)
-        })
-    });
+    try {
+        const recipes = await getRandomMeals(10);
+        const content = await renderFile(path.join(__dirname, "..", "views/index.ejs"), { recipes });
+        res.render(htmlTemplate, {
+            docTitle: "GR - Home",
+            upperNavBar: true,
+            footer: true,
+            content: content
+        });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 
 module.exports = router;
