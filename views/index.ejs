@@ -3,6 +3,7 @@
 
     <%# Search Bar central, com as principais opções de filtragem %>
     <%# quando o utilizador carrega no 'enter' é redirecionado para de 'Explore Recipes' %>
+
     <br>
     <div class="input-group">
         <input class="form-control border-end-0 border rounded-pill" type="search" value="search" id="example-search-input">
@@ -13,6 +14,7 @@
         </span>
     </div>
     <br>
+
     <%# Listar 10/5 Cards em forma de lista random/sugestões horizontal com scroll %>
-    <%- include('templates/horizontalCardTemplate', { recipes: recipes }) %>
+    <%- include('recipes/cards/cardsScrollListContainer.ejs', { recipes: recipes }) %>
 </content>

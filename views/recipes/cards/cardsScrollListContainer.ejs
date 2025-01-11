@@ -1,7 +1,7 @@
-<div class="cardContainer">
-
-    <% recipes.forEach(recipe => { %>
-        <%- include('card', { recipe: recipe }) %>
-    <% }) %>
-
+<div class="container my-4">
+    <div class="row flex-nowrap overflow-auto gx-1">
+        <% recipes.forEach((recipe) => { %>
+            <%- include('card', { recipe: recipe }) %>  
+        <% }) %>
+    </div>
 </div>

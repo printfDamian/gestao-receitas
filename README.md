@@ -103,37 +103,59 @@ Compreendido! Se toda a parte relacionada com receitas é gerida por uma API ext
 
 ---
 
-### AUTHORS
-- *André Silva*
-- *Gonçalo Ferreira*
-- *Samuel Santos*
+# Design
+
+### Logo
+
+<img style="background-color: #f39342; width: 200px" src="imagesReadme/GR-Logo.png">
+
+### Color
+
+**Main color:** *#f39342* / *RGB 243, 147, 66*
+![f39342 color](imagesReadme/f39342.png)
+
+**Secondary color:** *#ffffff* / *RGB 255, 255, 255*
+
+### Elements & Components
+
+##### Example for the design of cards:
+![Exemple cards design](imagesReadme/cards.png)
 
 ---
 
-## Code stuff
+# Technical manual
+
+### Code
 
 **show logout if logged in**:
 <% if (user) { %>
 <li><a href="/logout">Logout</a></li>
 <% } %>   
 
-## Api stuff
+### Api
 **Show categories**
 www.themealdb.com/api/json/v1/1/categories.php
 **filter by category**
 www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
 
-## content within content
+### content within content
 
 content: ejs.renderFile(path.join(__dirname, "public\views\indexLoggedIn.ejs"), (err, str) => {
                     return str;
                 }),
 
 
-## Models
+### Models
 mealModel
 categoryModel
 
-## Controller
+### Controller
 mealController
 categoryController
+
+---
+
+# AUTHORS
+- *André Silva*
+- *Gonçalo Ferreira*
+- *Samuel Santos*
