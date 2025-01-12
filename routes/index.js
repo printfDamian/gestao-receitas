@@ -7,7 +7,7 @@ const { getRandomMeals } = require("../controllers/mealController");
 const htmlTemplate = path.join(__dirname, "..", "views/templates/htmlTemplate.ejs");
 
 // Home page route
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
     try {
         const recipes = await getRandomMeals(10);
         const content = await renderFile(path.join(__dirname, "..", "views/index.ejs"), { recipes });
@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
             CustomCssFile: "index.css"
         });
     } catch (error) {
-        res.status(500).send(error.message);
+        next(error); 
     }
 });
 

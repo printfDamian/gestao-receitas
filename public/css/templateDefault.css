@@ -5,6 +5,13 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.cardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .card {
     border: none;
     background-color: transparent;

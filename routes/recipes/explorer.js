@@ -4,10 +4,10 @@ const router = express.Router();
 const path = require("path");
 const { getAllMeals } = require("../../controllers/mealController");
 
-const htmlTemplate = path.join(__dirname, "..", "views/templates/htmlTemplate.ejs");
+const htmlTemplate = path.join(__dirname, "../..", "views/templates/htmlTemplate.ejs");
 
 // Explore recipes page route
-router.get("/recipes", async (req, res) => {
+router.get("/recipes", async (req, res, next) => {
     try {
         const recipes = await getAllMeals();
         const content = await renderFile(path.join(__dirname, "../..", "views/recipes/explorer.ejs"), { recipes });
@@ -19,7 +19,7 @@ router.get("/recipes", async (req, res) => {
             CustomCssFile: "exporer.css"
         });
     } catch (error) {
-        res.status(500).send(error.message);
+        next(error);
     }
 });
 

@@ -9,7 +9,7 @@ router.use(require('./index'));
 router.use(require('./auth/register'));
 router.use(require('./auth/login'));
 router.use(require('./dashboard'));
-router.use(require('./recipes/recipe'));
+router.use(require('./recipes/explorer'));
 router.use(require('./recipes/category'));
 
 // Error handling
@@ -20,24 +20,22 @@ router.all("*", (req, res, next) => {
 });
 
 router.use(async (err, req, res, next) => {
-    console.log(err.message);
-    if (res.headersSent) return next(err);
+    console.error('Error:', err.message);
     
-    const errorPage = await ejs.renderFile(path.join(__dirname + "/../views/erro.ejs"));
-    ejs.renderFile(pathToTemplate, {
-        docTitle: "GR - Register",
-        upperNavBar: true,
-        content: errorPage,
-        footer: true,
-        CustomCssFile: null
-    },
-    (err, str) => {
-        if (err) {
-            res.status(500).send(err.message);
-        } else {
-            res.status(200).send(str);
-        }
-    });
+    try {
+        const errorPage = await ejs.renderFile(path.join(__dirname, "/../views/erro.ejs"));
+        
+        res.status(err.statusCode || 500).render(pathToTemplate, {
+            docTitle: "GR - Error",
+            upperNavBar: true,
+            content: errorPage,
+            footer: true,
+            CustomCssFile: null
+        });
+    } catch (renderError) {
+        console.error('Error rendering error page:', renderError);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 module.exports = router;
