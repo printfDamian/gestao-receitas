@@ -1,0 +1,135 @@
+.content-container {
+    position: relative;
+    min-height: calc(100vh - 50px);
+    width: 100%;
+    overflow: hidden;
+}
+
+.content-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/index-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+    z-index: -1;
+}
+
+.search-container {
+    margin-top: 10%;
+}
+
+.search{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 40px;
+    padding: 10px;
+}
+
+.search_input{
+    color: black;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    margin-top:5px;
+    caret-color:transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+}
+
+.search .search_input{
+    padding: 0 10px;
+    width: 550px;
+    caret-color:#f39342;
+    transition: width 0.4s linear;
+}
+    
+.search_icon:hover{
+    background: #bd631a;
+}
+
+.search_icon{
+    height: 50px;
+    width: 50px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    background-color:#f39342;
+}
+    
+a:link{
+    text-decoration:none;
+}
+
+.card {
+    width: 75%;
+}
+
+.swiper-pagination {
+    position: absolute;
+    bottom: -10px !important;
+    top: auto !important;
+}
+
+.swiper {
+    margin: 0 auto;
+    padding: 0 40px !important;
+    padding-bottom: 40px !important;
+    position: relative;
+    overflow: hidden !important;
+    width: 100%;
+}
+
+.swiper-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: black;
+    position: absolute;
+}
+
+.swiper-button-next {
+    right: 0px;
+    left: auto;
+}
+
+.swiper-button-prev {
+    left: 0px;
+    right: auto;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 50px !important;
+}
+
+.swiper-pagination {
+    position: absolute;
+    bottom: 0 !important;
+    top: auto !important;
+}
+
+.container.my-4 {
+    overflow: visible;
+    padding-bottom: 20px;
+}

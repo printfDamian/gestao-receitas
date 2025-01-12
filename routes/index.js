@@ -15,7 +15,8 @@ router.get("/", async (req, res) => {
             docTitle: "GR - Home",
             upperNavBar: true,
             footer: true,
-            content: content
+            content: content,
+            CustomCssFile: "index.css"
         });
     } catch (error) {
         res.status(500).send(error.message);

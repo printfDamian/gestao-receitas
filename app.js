@@ -13,9 +13,13 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Middleware to serve static files
-app.use(express.static(path.join(__dirname, "./public")));
+app.use(express.static(path.join(__dirname, "/public")));
 app.use("/css", express.static("./node_modules/bootstrap/dist/css"));
+app.use("/css", express.static("./node_modules/bootstrap-icons/font"));
+app.use("/css", express.static("./node_modules/swiper"));
 app.use("/js", express.static("./node_modules/bootstrap/dist/js"));
+app.use("/js", express.static("./node_modules/swiper"));
+app.use("/js", express.static("./node_modules/jquery/dist"));
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());

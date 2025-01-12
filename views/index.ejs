@@ -1,20 +1,34 @@
-<content>
+<section class="content-container">
     <%# *Não interessa se o utilizador está ou não logado* %>
 
     <%# Search Bar central, com as principais opções de filtragem %>
     <%# quando o utilizador carrega no 'enter' é redirecionado para de 'Explore Recipes' %>
 
-    <br>
-    <div class="input-group">
-        <input class="form-control border-end-0 border rounded-pill" type="search" value="search" id="example-search-input">
-        <span class="input-group-append">
-            <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button">
-                <i class="bi bi-search"></i>
-            </button>
-        </span>
+    <div class="container search-container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="search">
+                <input class="search_input" type="text" name="" placeholder="Search here...">
+                <a href="#" class="search_icon"><i class="bi bi-search"></i></a>
+            </div>
+        </div>
     </div>
-    <br>
+
+    <script>
+        const searchLocation = "/recipes/explore";
+        const searchInput = $('.search_input');
+        const searchIcon = $('.search_icon');
+
+        searchInput.keypress(function (e) {
+            if (e.key === 'Enter') {
+                window.location.href = searchLocation + '?search=' + encodeURI(searchInput.val());
+            }
+        });
+
+        searchIcon.click(function () {
+            window.location.href = searchLocation + '?search=' + encodeURI(searchInput.val());
+        });
+    </script>
 
     <%# Listar 10/5 Cards em forma de lista random/sugestões horizontal com scroll %>
     <%- include('recipes/cards/cardsScrollListContainer.ejs', { recipes: recipes }) %>
-</content>
+</section>

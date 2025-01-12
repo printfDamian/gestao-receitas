@@ -19,6 +19,7 @@ router.get('/registerPage', (req, res) => {
             footer: true,
             error: error
         },
+        
         (err, str) => {
             if (err) {
                 res.status(500).send(err.message);
