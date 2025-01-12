@@ -16,4 +16,4 @@ const getRandomMeals = async (nrMeals) => {
     return shuffled.slice(0, nrMeals);
 };
 
-module.exports = { getRandomMeals };
+module.exports = { getAllMeals, getRandomMeals };

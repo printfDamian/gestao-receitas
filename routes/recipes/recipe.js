@@ -1,35 +1,26 @@
-var express = require("express");
-var router = express.Router();
-var path = require("path");
-const fs = require("fs");
-const ejs = require("ejs");
-const userController = require('../../controllers/userController'); 
+const { renderFile } = require("ejs");
+const express = require("express");
+const router = express.Router();
+const path = require("path");
+const { getAllMeals } = require("../../controllers/mealController");
 
-const pathToTemplate = path.join(__dirname, "/../views/htmlTemplate.ejs");
+const htmlTemplate = path.join(__dirname, "..", "views/templates/htmlTemplate.ejs");
 
-router.get('/registerPage', (req, res) => {
-    const error = req.query.error;
-    fs.readFile(__dirname + "/../views/register.ejs", "utf8", (err, data) => {
-        if (err) return res.status(500).send(err.message);
-        
-        ejs.renderFile(pathToTemplate, {
-            docTitle: "GR - Register",
+// Explore recipes page route
+router.get("/recipes", async (req, res) => {
+    try {
+        const recipes = await getAllMeals();
+        const content = await renderFile(path.join(__dirname, "../..", "views/recipes/explorer.ejs"), { recipes });
+        res.render(htmlTemplate, {
+            docTitle: "GR - Home",
             upperNavBar: true,
-            content: data,
             footer: true,
-            error: error
-        },
-        
-        (err, str) => {
-            if (err) {
-                res.status(500).send(err.message);
-            } else {
-                res.status(200).send(str);
-            }
+            content: content,
+            CustomCssFile: "exporer.css"
         });
-    });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
-
-router.post('/register', userController.register);
 
 module.exports = router;
