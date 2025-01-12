@@ -1,4 +1,4 @@
-<div class="card mb-1" style="width: 90%">
+<div class="card mb-1">
 	<img src="<%= recipe.strMealThumb %>" class="card-img-top" alt="<%= recipe.strMeal %>" />
 	<div class="card-body">
 		<h5 class="card-title"><strong>Name: </strong>
@@ -7,33 +7,25 @@
 		<p class="card-text"><strong>Type: </strong>
 			<%= recipe.strCategory %>
 		</p>
-		<button class="btn btn-outline-warning">Meal details</button>
+		
+		<div class="card-footer">
+			<small class="text-muted">Last updated 3 mins ago</small>
+			<button class="btn btn-outline-warning">Meal details</button>
+		</div>
 	</div>
 </div>
 
-<% /* %>
-	<div class="row">
-		<% recipes.forEach(function(recipe) { %>
-			<div class="col-12 col-md-4 col-lg-3 mb-1">
-				<div class="card" style="width: 95%">
-					<img src="<%= recipe.strMealThumb %>" class="card-img-top" alt="<%= recipe.strMeal %>" />
-					<div class="card-body text-center">
-						<h5 class="card-title">
-							<%= recipe.strMeal %>
-						</h5>
-						<p class="card-text">
-							<span class="text-warning">
-								&#9733; &#9733; &#9733; &#9733; &#9734;
-							</span>
-							(7 Reviews)
-						</p>
-						<p class="card-text">
-							<small class="text-muted">20 mins</small>
-						</p>
-						<a href="#" class="btn btn-success">View Recipe</a>
-					</div>
-				</div>
-			</div>
-			<% }); %>
+<% /* %> Old design
+	<div class="card mb-1" style="width: 90%">
+		<img src="<%= recipe.strMealThumb %>" class="card-img-top" alt="<%= recipe.strMeal %>" />
+		<div class="card-body">
+			<h5 class="card-title"><strong>Name: </strong>
+				<%= recipe.strMeal %>
+			</h5>
+			<p class="card-text"><strong>Type: </strong>
+				<%= recipe.strCategory %>
+			</p>
+			<button class="btn btn-outline-warning">Meal details</button>
+		</div>
 	</div>
-	<% */ %>
+<% */ %>

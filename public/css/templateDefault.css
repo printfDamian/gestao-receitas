@@ -1,8 +1,37 @@
-/* Temp */
 body {
     margin: 0;
     color: black;
     background-color: white;
     font-family: 'Poppins', sans-serif;
+}
+
+.card {
+    border: none;
+    background-color: transparent;
+    width: 90%
+}
+
+.card-img-top {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    width: 80%;
+    margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.253), 0 6px 20px 0 rgba(0, 0, 0, 0.329);
+}
+
+.card-body {
+    border-radius: 30px;
+    text-align: center;
+    background-color: white;
+    padding-top: 60%;
+    margin-top: 50%;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center
 }
 
