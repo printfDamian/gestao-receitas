@@ -1,30 +1,24 @@
-var express = require("express");
-var router = express.Router();
-var path = require("path");
-const fs = require("fs");
-const ejs = require("ejs");
+const { renderFile } = require("ejs");
+const express = require("express");
+const router = express.Router();
+const path = require("path");
 const { register } = require('../../controllers/userController'); 
 
-const pathToTemplate = path.join(__dirname, "/../../views/templates/htmlTemplate.ejs");
+const htmlTemplate = path.join(__dirname, "/../../views/templates/htmlTemplate.ejs");
 
-router.get('/registerPage', (req, res) => {
-    fs.readFile(__dirname + "/../../views/auth/register.ejs", "utf8", (err, data) => {
-        if (err) return res.status(500).send(err.message);
-        
-        ejs.renderFile(pathToTemplate, {
+router.get("/register", async (req, res, next) => {
+    try {
+        const content = await renderFile(path.join(__dirname + "/../../views/auth/register.ejs"));
+        res.render(htmlTemplate, {
             docTitle: "GR - Register",
             upperNavBar: true,
-            content: data,
-            footer: true
-        },
-        (err, str) => {
-            if (err) {
-                res.status(500).send(err.message);
-            } else {
-                res.status(200).send(str);
-            }
+            footer: true,
+            content: content,
+            CustomCssFile: "register.css"
         });
-    });
+    } catch (error) {
+        next(error); 
+    }
 });
 
 router.post('/register', register);

@@ -22,6 +22,7 @@
 
 .search-container {
     margin-top: 10%;
+    margin-bottom: -50px;
 }
 
 .search{
@@ -74,7 +75,7 @@ a:link{
 }
 
 .card {
-    width: 75%;
+    min-width: fit-content;
 }
 
 .swiper-pagination {
@@ -85,7 +86,7 @@ a:link{
 
 .swiper {
     margin: 0 auto;
-    padding: 0 40px !important;
+    padding: 0 30px !important;
     padding-bottom: 40px !important;
     position: relative;
     overflow: hidden !important;
@@ -133,3 +134,55 @@ a:link{
     overflow: visible;
     padding-bottom: 20px;
 }
+
+/* Extra Small */
+.scrollContainer {
+    width: 100%;
+    overflow: visible;
+    padding-bottom: 20px;
+    margin: auto;
+}
+
+/* Small */
+@media only screen and (min-width: 576px) {
+    .scrollContainer {
+        max-width: 500px;
+    }
+}
+
+/* Medium */
+@media only screen and (min-width: 768px) {
+    .scrollContainer {
+        max-width: 600px;
+    }
+}
+
+/* Large */
+@media only screen and (min-width: 992px) {
+    .scrollContainer {
+        max-width: 900px;
+    }
+}
+
+/* X-Large */
+@media only screen and (min-width: 1200px) {
+    .scrollContainer {
+        max-width: 850px;
+    }
+    .search-container {
+        margin-top: 8%;
+        margin-bottom: -60px;
+    }
+}
+
+/* XX-Large */
+@media only screen and (min-width: 1400px) {
+    .scrollContainer {
+        max-width: 850px;
+    }
+    .search-container {
+        margin-top: 8%;
+        margin-bottom: -50px;
+    }
+}
+

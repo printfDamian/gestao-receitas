@@ -1,0 +1,79 @@
+.content {
+    height: calc(100vh - 50px);
+}
+
+#MainForm {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.253), 0 6px 20px 0 rgba(0, 0, 0, 0.329);
+    padding: 30px;
+    border-radius: 10px;
+    min-width: 300px;
+    width: 100%;
+}
+
+#MainForm > div {
+    padding: 10px;
+}
+
+.register-container {
+    background-color: #f39342;
+    width: 95%;
+    display: flex;
+    border-radius: 10px;
+}
+
+.register-submit {
+    float: right;
+}
+
+.registerLogoGR {
+    display: none;
+    width: 50%;
+}
+
+/* Small */
+@media only screen and (min-width: 576px) {
+    .register-container {
+        width: 500px;
+    }
+}
+
+/* Medium */
+@media only screen and (min-width: 768px) {
+    .register-container {
+        width: 600px;
+    }
+}
+
+/* Large */
+@media only screen and (min-width: 992px) {
+    .register-container {
+        width: 700px;
+        margin: auto;
+    }
+    .registerLogoGR {
+        display: block;
+    }
+}
+
+/* X-Large */
+@media only screen and (min-width: 1200px) {
+    .register-container {
+        width: 700px;
+        margin: auto;
+    }
+    .registerLogoGR {
+        display: block;
+    }
+}
+
+/* XX-Large */
+@media only screen and (min-width: 1400px) {
+    .register-container {
+        width: 700px;
+        margin: auto;
+    }
+    .registerLogoGR {
+        display: block;
+    }
+}

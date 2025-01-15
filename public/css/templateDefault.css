@@ -42,3 +42,67 @@ body {
     align-items: center
 }
 
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: #f39342;
+}
+
+footer a {
+    color: white;
+}
+
+footer a:hover {
+    color: #ffd9b9;
+}
+
+.footer-content {
+    background-color: #261f19;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 40px;
+    text-align: center;
+}
+
+.footer-content div {
+    width: 25%;
+}
+
+.footer-content img {
+    max-width: 200px;
+}
+
+.footer-bottom {
+    background-color: #f39342;
+    padding: 20px;
+}
+
+.footer-bottom ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+#ips-logo {
+    -webkit-filter: drop-shadow(1px 1px 0 white)
+                    drop-shadow(-1px 1px 0 white)
+                    drop-shadow(1px -1px 0 white)
+                    drop-shadow(-1px -1px 0 white);
+
+    filter: drop-shadow(1px 1px 0 white)
+            drop-shadow(-1px 1px 0 white)
+            drop-shadow(1px -1px 0 white)
+            drop-shadow(-1px -1px 0 white);
+}
