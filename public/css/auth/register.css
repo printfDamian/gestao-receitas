@@ -2,7 +2,7 @@
     height: calc(100vh - 50px);
 }
 
-#MainForm {
+#register-form {
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.253), 0 6px 20px 0 rgba(0, 0, 0, 0.329);
     padding: 30px;
@@ -11,7 +11,7 @@
     width: 100%;
 }
 
-#MainForm > div {
+#register-form > div {
     padding: 10px;
 }
 

@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.SECRETKEY;
 
 const register = async (req, res) => {
     try {
-        const { email, password, name } = req.body;
+        const { name, email, password } = req.body;
 
         if (!email || !password || !name) {
             return res.status(400).json({ error: 'All fields are required' });

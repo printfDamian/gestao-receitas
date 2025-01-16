@@ -1,14 +1,14 @@
 <section class="content">
 	<div class="register-container position-absolute top-50 start-50 translate-middle">
 		<img class="registerLogoGR" src="/images/GR-Logo.svg" alt="GR">
-		<form id="MainForm" class="m-2" action="/register" method="POST">
+		<form id="register-form" class="m-2" action="/register" method="POST">
 	
 			<h2>Register</h2>
 	
 			<div class="form-row align-items-center">
 				<div class="my-1">
 					<label class="sr-only" for="inlineFormInputName">Name</label>
-					<input type="text" class="form-control" id="inlineFormInputName" placeholder="John Doe" />
+					<input type="text" class="form-control" name="name" id="inlineFormInputName" placeholder="John Doe" />
 				</div>
 	
 				<div class="my-1">
@@ -17,18 +17,23 @@
 						<div class="input-group-prepend">
 							<div class="input-group-text">@</div>
 						</div>
-						<input type="email" class="form-control" id="inlineFormInputGroupEmail" placeholder="john.doe@example.com" />
+						<input type="email" class="form-control" name="email" id="inlineFormInputGroupEmail" placeholder="john.doe@example.com" />
 					</div>
 				</div>
 	
 				<div class="my-1">
 					<label class="sr-only" for="inlineFormInputPassword">Password</label>
-					<input type="password" class="form-control" id="inlineFormInputPassword" placeholder="********" />
+					<input type="password" class="form-control" name="password" id="inlineFormInputPassword" placeholder="********" />
+				</div>
+
+				<div class="my-1">
+					<label class="sr-only" for="inlineFormInputConfPassword">Confirm Password</label>
+					<input type="password" class="form-control" name="confirmPassword" id="inlineFormInputConfPassword" placeholder="********" />
 				</div>
 	
 				<div class="col-auto my-1">
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" id="autoSizingCheck2" />
+						<input class="form-check-input" type="checkbox" name="remember" id="autoSizingCheck2" />
 						<label class="form-check-label" for="autoSizingCheck2">
 							Remember me
 						</label>
@@ -45,3 +50,5 @@
 		</form>
 	</div>
 </section>
+
+<script src="/js/register.js"></script>

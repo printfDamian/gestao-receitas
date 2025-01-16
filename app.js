@@ -4,6 +4,7 @@ const app = express();
 require("dotenv").config();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 
 // === App Config ===
 
@@ -25,6 +26,9 @@ app.use("/js", express.static("./node_modules/jquery/dist"));
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware to log requests
+app.use(morgan('dev'));
 
 // Session/Cookie Configuration
 app.use(cookieParser(process.env.SECRETKEY));
