@@ -20,11 +20,14 @@ Needs more data validation (i.e. check if the email has a good format) ||| ✓ C
 - DB_USER
 - DB_PASSWORD
 - DB_DATABASE (default = 'gestao_receitas')
-- FIREBASE_APIKEY
 - SECRETKEY
 
 ### Intall all npm packages
 `npm install --save`
+
+### Run the SQL script 
+Using a software like Xampp/Wampp or MySQL service
+Execute [`db/gestao_receitas.sql`](db/gestao_receitas.sql)
 
 ### Start the server
 - Using nodemon *(for debug)*:

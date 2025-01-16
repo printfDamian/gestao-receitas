@@ -1,0 +1,1 @@
+// utilizar ajax + jquery para validação de dados do cliente, envio, receber e tratar resposta do servidor

@@ -1,69 +1,76 @@
-const { auth } = require('../configs/firebase');
-const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
 const jwt = require('jsonwebtoken');
-const { createUser, getUserById } = require('../models/userModel');
-
+const { createUser, getUserByEmail } = require('../models/userModel');
+const bcrypt = require('bcryptjs');
+const validate = require('../configs/validations');
 const JWT_SECRET = process.env.SECRETKEY;
-
-function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
 
 const register = async (req, res) => {
     try {
         const { email, password, name } = req.body;
 
-        if(!validateEmail(email))
-        {
-            return -1; 
+        if (!email || !password || !name) {
+            return res.status(400).json({ error: 'All fields are required' });
         }
-        
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const firebaseUser = userCredential.user;
 
-        const user = await createUser(
-            firebaseUser.uid,
-            firebaseUser.email,
-            req.body.name
+        if (!validate.email(email)) {
+            return res.status(400).json({ error: 'Invalid email format' });
+        }
+
+        if (!validate.password(password)) {
+            return res.status(400).json({ error: 'Password must be at least 8 characters long and contain at least one letter and one number' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const user = await createUser({
+            email,
+            password: hashedPassword,
+            name
+        });
+
+        const token = jwt.sign(
+            { userId: user.id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '24h' }
         );
 
-        // Generate JWT
-        const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+        return res.status(201).json({
+            message: 'User registered successfully',
+            token,
+            userId: user.id
+        });
 
-        // Store JWT and user data in session
-        req.session.token = jwtToken;
-        req.session.user = user;
-
-
-        res.redirect('/dashboard'); // Redirect to the dashboard page
-    } catch (err) {
-        res.redirect('/registerPage?error=' + encodeURIComponent(err.message));
-        console.log(err);
+    } catch (error) {
+        console.error('Registration error:', error);
+        return res.status(500).json({ error: 'Registration failed' });
     }
 };
 
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const firebaseUser = userCredential.user;
 
-        let user = await getUserById(firebaseUser.uid);
+        const user = await getUserByEmail(email);
         if (!user) {
-            redirect('/loginPage?error=' + encodeURIComponent('User not found'));
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        if (!bcrypt.compareSync(password, user.password)) {
+            return res.status(401).send({ error: 'Invalid password' });
         }
 
         // Generate JWT
-        const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+        const jwtToken = jwt.sign(
+            { id: user.id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '30d' }
+        );
+        res.cookie('loginToken', jwtToken, {signed: true});
 
-        // Store JWT and user data in session
-        req.session.token = jwtToken;
-        req.session.user = user;
-
-        res.redirect('/dashboard'); // Redirect to the dashboard page
+        res.send({ message: 'Logged in successfully', token: jwtToken });
     } catch (err) {
-        res.redirect('/loginPage?error=' + encodeURIComponent(err.message));
+        res.send({ error: 'Login failed' });
         console.log(err);
     }
 };

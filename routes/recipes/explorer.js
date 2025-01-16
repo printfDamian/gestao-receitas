@@ -16,7 +16,7 @@ router.get("/recipes", async (req, res, next) => {
             upperNavBar: true,
             footer: true,
             content: content,
-            CustomCssFile: "exporer.css"
+            CustomCssFile: "recipes/explorer.css"
         });
     } catch (error) {
         next(error);

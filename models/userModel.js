@@ -10,14 +10,14 @@ const getAllUsers = async () => {
 const getUserById = async (id) => {
 	await pool.query('SELECT id, name, email, CREATEAD_AT, UPDATED_AT FROM users WHERE id = ?', [id], (err, rows, fields) => {
 		if (err) throw err;
-		return rows[0];
+		return rows[0] || null;
 	});
 }
 
 const getUserByEmail = async (email) => {
 	await pool.query('SELECT id, name, email, CREATEAD_AT, UPDATED_AT FROM users WHERE email = ?', [email], (err, rows, fields) => {
 		if (err) throw err;
-		return rows[0];
+		return rows[0] || null;
 	});
 }
 

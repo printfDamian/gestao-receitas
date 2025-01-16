@@ -3,6 +3,7 @@ const path = require("path");
 const app = express();
 require("dotenv").config();
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 // === App Config ===
 
@@ -25,14 +26,15 @@ app.use("/js", express.static("./node_modules/jquery/dist"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session Configuration
+// Session/Cookie Configuration
+app.use(cookieParser(process.env.SECRETKEY));
 app.use(session({
     secret: process.env.SECRETKEY,
     resave: false,
     saveUninitialized: true
 }));
 
-// Routes / Endpoints
+// Routes & EndPoints
 app.use(require('./routes/routes'));
 
 app.listen(port);
