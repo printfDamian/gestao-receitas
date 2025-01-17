@@ -1,12 +1,8 @@
-// utilizar ajax + jquery para validação de dados do cliente, envio, receber e tratar resposta do servidor
-
-
-
-$("#register-form").submit(function(e) {
+$("#register-form").on('submit', function(e) {
     e.preventDefault();
 
-    let form = $(this);
-    let url = form.attr('action');
+    const form = $(this);
+    const url = form.attr('action');
 
     const name = form.find('input[name="name"]').val();
     const email = form.find('input[name="email"]').val();
@@ -19,26 +15,28 @@ $("#register-form").submit(function(e) {
         return;
     }
 
-    $.post(
-        url,
-        { 
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: { 
             email: email,
             name: name,
             password: password 
         },
-        function(response, status, err) {
+        success: function(response) {
             console.log(response);
-            console.log(status);
-            console.log(err);
-            if(err) return alert(JSON.stringify(err));
-
             if(response == 'ok') {
-                alert("Register success!");
-                console.log("Register success!")
-                window.location.href = '/explorer';
+                showAlert("Register success!", "success");
+                setTimeout(() => {
+                    window.location.href = '/explorer';
+                }, 1500);
             } else {
-                alert(response);
+                showAlert(response, "danger");
             }
+        },
+        error: function(error) {
+            console.error(error);
+            showAlert(error.responseJSON.error, "danger");
         }
-    );
+    });
 });

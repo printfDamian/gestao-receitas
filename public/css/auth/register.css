@@ -22,8 +22,14 @@
     border-radius: 10px;
 }
 
-.register-submit {
-    float: right;
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.form-footer > a {
+    text-decoration: underline;
 }
 
 .registerLogoGR {
