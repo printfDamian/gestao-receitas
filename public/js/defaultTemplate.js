@@ -1,6 +1,6 @@
 function showAlert(message, type = 'danger') {
     const alertHTML = `
-        <div class="alert alert-${type} alert-dismissible fade show fixed-top m-3" role="alert">
+        <div class="alert alert-${type} alert-dismissible fade show fixed-top " role="alert">
             ${message}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -15,5 +15,5 @@ function showAlert(message, type = 'danger') {
             const bsAlert = new bootstrap.Alert(alert);
             bsAlert.close();
         }
-    }, 30000);
+    }, 5000);
 }

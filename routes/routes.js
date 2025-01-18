@@ -12,6 +12,8 @@ router.use(require('./dashboard'));
 router.use(require('./recipes/explorer'));
 router.use(require('./recipes/category'));
 
+router.use(require('./api/validations'));
+
 // Error handling
 router.all("*", (req, res, next) => {
     const error = new Error("Page not found");
@@ -30,7 +32,8 @@ router.use(async (err, req, res, next) => {
             upperNavBar: true,
             content: errorPage,
             footer: true,
-            CustomCssFile: null
+            CustomCssFile: null,
+            CustomJsFile: null
         });
     } catch (renderError) {
         console.error('Error rendering error page:', renderError);

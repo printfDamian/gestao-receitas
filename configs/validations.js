@@ -6,12 +6,18 @@ module.exports = {
         return emailRegex.test(email);
     },
     emailRegex: () => {
-        return emailRegex;
+        return {
+            regexStr: emailRegex.source,
+            description: "Email must contain a single @, a single . and no spaces."
+        };
     },
     password: (password) => {
         return passwordRegex.test(password);
     },
     passwordRegex: () => {
-        return passwordRegex;
+        return {
+            regexStr: passwordRegex.source,
+            description: "Pssword requirements (at least): \n8 characters; \n1 number; \n1 downcase and uppercase character"
+        };
     }
 }

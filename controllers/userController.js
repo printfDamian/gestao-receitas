@@ -2,23 +2,42 @@ const jwt = require('jsonwebtoken');
 const { createUser, getUserByEmail } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const validate = require('../configs/validations');
+const { error } = require('jquery');
 const JWT_SECRET = process.env.SECRETKEY;
+
+function validateCredentials(name, email, password) {
+    if (name) {
+        if (!name || !email || !password) {
+            return 'All fields are required';
+        }
+    } else {
+        if (!email || !password) {
+            return 'All fields are required';
+        }
+    }
+
+    if (!validate.email(email)) {
+        return validate.emailRegex().description;
+    }
+
+    if (!validate.password(password)) {
+        return validate.passwordRegex().description;
+    }
+
+    return null;
+}
 
 const register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        let { name, email, password } = req.body;
 
-        if (!email || !password || !name) {
-            return res.status(400).json({ error: 'All fields are required' });
-        }
-
-        if (!validate.email(email)) {
-            return res.status(400).json({ error: 'Invalid email format' });
-        }
-
-        if (!validate.password(password)) {
-            return res.status(400).json({ error: 'Password must be at least 8 characters long and contain at least one letter and one number' });
-        }
+        name = name.trim();
+        email = email.trim();
+        password = password.trim();
+        
+        const error = validateCredentials(name, email, password)
+        if (error) return res.status(400).json({ error: error });
+    
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -49,7 +68,13 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        let { email, password } = req.body;
+
+        email = email.trim();
+        password = password.trim();
+
+        const error = validateCredentials(email, password)
+        if (error) return res.status(400).json({ error: error });
 
         const user = await getUserByEmail(email);
         if (!user) {

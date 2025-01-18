@@ -14,7 +14,8 @@ router.get("/register", async (req, res, next) => {
             upperNavBar: true,
             footer: true,
             content: content,
-            CustomCssFile: "auth/register.css"
+            CustomCssFile: "auth/register.css",
+            CustomJsFile: "register.js"
         });
     } catch (error) {
         next(error); 

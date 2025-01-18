@@ -1,4 +1,5 @@
 const pool = require("../configs/localDataBase");
+const role = 2; // Default role for normal users
 
 const getAllUsers = async () => {
 	await pool.query('SELECT id, name, email, CREATEAD_AT, UPDATED_AT FROM users', (err, rows, fields) => {
@@ -21,11 +22,9 @@ const getUserByEmail = async (email) => {
 	});
 }
 
-const createUser = async (name, email, password) => {
-	await pool.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, password], (err, rows, fields) => {
-		if (err) throw err;
-		return rows;
-	});
+const createUser = async (userData) => {
+	const { name, email, password } = userData;
+	return await pool.query('INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)', [name, email, password, role]);
 }
 
 const updateUser = async (name, email, password, id) => {
