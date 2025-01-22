@@ -29,7 +29,7 @@ function validateCredentials(name, email, password) {
 
 const register = async (req, res) => {
     try {
-        let { name, email, password } = req.body;
+        let { name, email, password, remember } = req.body;
 
         name = name.trim();
         email = email.trim();
@@ -38,26 +38,33 @@ const register = async (req, res) => {
         const error = validateCredentials(name, email, password)
         if (error) return res.status(400).json({ error: error });
     
+        const user = await getUserByEmail(email);
+        if (user) return res.status(400).json({ error: 'User already exists'});
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const user = await createUser({
+        const newUser = await createUser({
             email,
             password: hashedPassword,
             name
         });
 
+        let expires = '24h';
+        if(remember === true) {
+            expires = '1y';
+        }
+
         const token = jwt.sign(
-            { userId: user.id, email: user.email },
+            { userId: newUser.id, email: newUser.email },
             JWT_SECRET,
-            { expiresIn: '24h' }
+            { expiresIn: expires }
         );
 
         return res.status(201).json({
             message: 'User registered successfully',
             token,
-            userId: user.id
+            userId: newUser.id
         });
 
     } catch (error) {
@@ -68,7 +75,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        let { email, password } = req.body;
+        let { email, password, remember } = req.body;
 
         email = email.trim();
         password = password.trim();
@@ -85,11 +92,15 @@ const login = async (req, res) => {
             return res.status(401).send({ error: 'Invalid password' });
         }
 
-        // Generate JWT
+        let expires = '24h';
+        if(remember === true) {
+            expires = '1y';
+        }
+
         const jwtToken = jwt.sign(
             { id: user.id, email: user.email },
             JWT_SECRET,
-            { expiresIn: '30d' }
+            { expiresIn: expires }
         );
         res.cookie('loginToken', jwtToken, {signed: true});
 

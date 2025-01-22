@@ -32,22 +32,29 @@ $(function() {
             data: { 
                 email: formElements.email.val(),
                 name: formElements.name.val(),
-                password: formElements.password.val()
+                password: formElements.password.val(),
+                remember: formElements.remember.is(':checked')
             },
-            success: function(response) {
-                console.log(response);
-                if(response == 'ok') {
-                    showAlert("Register success!", "success");
+            success: function(data, textStatus, xhr) {
+                if(xhr.status === 201) {
+
+                    document.cookie = `loginToken=${data.token}; path=/`;
+
                     setTimeout(() => {
-                        window.location.href = '/explorer';
+                        window.location.href = '/explorer?alert=' 
+                        + encodeURI("Register success!")
+                        + '&type='
+                        + encodeURI("success");
                     }, 1500);
                 } else {
                     showAlert(response, "danger");
                 }
             },
-            error: function(error) {
-                console.error(error);
-                showAlert(error.responseJSON.error, "danger");
+            error: function(err) {
+                if (!err) return;
+                console.error(err);
+                const errorMessage = err.responseJSON?.error || 'Registration failed. Please try again.';
+                showAlert(errorMessage, "danger");
             }
         });
     });

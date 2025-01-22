@@ -1,3 +1,12 @@
+let params = new URLSearchParams(document.location.search);
+
+$(document).ready(function () {
+    if (params.get('alert')) {
+        let type = params.get('type') || 'info';
+        showAlert(params.get('alert'), type);
+    }
+});
+
 function showAlert(message, type = 'danger') {
     const alertHTML = `
         <div class="alert alert-${type} alert-dismissible fade show fixed-top " role="alert">
@@ -17,3 +26,15 @@ function showAlert(message, type = 'danger') {
         }
     }, 5000);
 }
+
+$.ajaxSetup({
+    beforeSend: function(xhr) {
+        const token = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('loginToken='))
+            ?.split('=')[1];
+        if (token) {
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+        }
+    }
+});

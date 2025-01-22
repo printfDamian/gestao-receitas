@@ -16,7 +16,8 @@ router.get("/", async (req, res, next) => {
             upperNavBar: true,
             footer: true,
             content: content,
-            CustomCssFile: "index.css"
+            CustomCssFile: "index.css",
+            CustomJsFile: null
         });
     } catch (error) {
         next(error); 

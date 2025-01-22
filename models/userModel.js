@@ -16,10 +16,13 @@ const getUserById = async (id) => {
 }
 
 const getUserByEmail = async (email) => {
-	await pool.query('SELECT id, name, email, CREATEAD_AT, UPDATED_AT FROM users WHERE email = ?', [email], (err, rows, fields) => {
-		if (err) throw err;
-		return rows[0] || null;
-	});
+    try {
+        const [rows] = await pool.query('SELECT id, name, email, password, role, CREATED_AT, UPDATED_AT FROM users WHERE email = ?', [email]);
+        return rows[0] || null;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 }
 
 const createUser = async (userData) => {
