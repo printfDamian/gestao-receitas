@@ -32,11 +32,6 @@ app.use(morgan('dev'));
 
 // Session/Cookie Configuration
 app.use(cookieParser(process.env.SECRETKEY));
-app.use(session({
-    secret: process.env.SECRETKEY,
-    resave: false,
-    saveUninitialized: true
-}));
 
 // Routes & EndPoints
 app.use(require('./routes/routes'));

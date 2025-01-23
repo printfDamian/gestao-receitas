@@ -5,10 +5,10 @@ const fs = require("fs");
 const ejs = require("ejs");
 const pathToTemplate = path.join(__dirname, "/../views/templates/htmlTemplate.ejs");
 
+router.use(require('./auth/verifyToken').hasToken());
 router.use(require('./index'));
 router.use(require('./auth/register'));
 router.use(require('./auth/login'));
-router.use(require('./dashboard'));
 router.use(require('./recipes/explorer'));
 router.use(require('./recipes/category'));
 
@@ -32,6 +32,7 @@ router.use(async (err, req, res, next) => {
             upperNavBar: true,
             content: errorPage,
             footer: true,
+            token: req.userToken,
             CustomCssFile: null,
             CustomJsFile: null
         });

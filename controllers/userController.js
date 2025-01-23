@@ -80,7 +80,7 @@ const login = async (req, res) => {
         email = email.trim();
         password = password.trim();
 
-        const error = validateCredentials(email, password)
+        const error = validateCredentials(null, email, password)
         if (error) return res.status(400).json({ error: error });
 
         const user = await getUserByEmail(email);
@@ -89,7 +89,7 @@ const login = async (req, res) => {
         }
 
         if (!bcrypt.compareSync(password, user.password)) {
-            return res.status(401).send({ error: 'Invalid password' });
+            return res.status(401).send({ error: 'Wrong password' });
         }
 
         let expires = '24h';
@@ -97,14 +97,20 @@ const login = async (req, res) => {
             expires = '1y';
         }
 
-        const jwtToken = jwt.sign(
-            { id: user.id, email: user.email },
+        const token = jwt.sign(
+            { userId: user.id, email: user.email },
             JWT_SECRET,
             { expiresIn: expires }
         );
-        res.cookie('loginToken', jwtToken, {signed: true});
+        
+        res.cookie('loginToken', token, {signed: true});
 
-        res.send({ message: 'Logged in successfully', token: jwtToken });
+        return res.status(201).json({
+            message: 'Logged in successfully',
+            token,
+            userId: user.id
+        });
+
     } catch (err) {
         res.send({ error: 'Login failed' });
         console.log(err);

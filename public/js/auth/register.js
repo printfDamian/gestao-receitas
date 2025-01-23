@@ -3,7 +3,7 @@ var passwordRegex, passwordDesc;
 
 $(function() {
     formElements = {
-        form: $('#register-form'),
+        form: $('#auth-form'),
         name: $('#inlineFormInputName'),
         email: $('#inlineFormInputGroupEmail'),
         password: $('#inlineFormInputPassword'),
@@ -12,6 +12,7 @@ $(function() {
     };
 
     formElements.password.on('focusout', function() {
+        if($(this).val() === '') return;
         validatePassword($(this).val());
     });
 
@@ -40,9 +41,17 @@ $(function() {
 
                     document.cookie = `loginToken=${data.token}; path=/`;
 
+                    let params = new URLSearchParams(document.location.search);
+                    let destination = '/explorer';
+                    if(params.get('destination')) {
+                        destination = "/" + params.get('destination');
+                    }
+
                     setTimeout(() => {
-                        window.location.href = '/explorer?alert=' 
-                        + encodeURI("Register success!")
+                        window.location.href =
+                        destination
+                        + '?alert=' 
+                        + encodeURI("Login success!")
                         + '&type='
                         + encodeURI("success");
                     }, 1500);

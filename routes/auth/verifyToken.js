@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+const JWT_SECRET = process.env.SECRETKEY;
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN_STRING
+    const token = authHeader && authHeader.split(' ')[1];
+    let loginUrl = "/login?destination=" + req.originalUrl;
 
     if (!token) {
-        return res.status(401).json({ error: 'Access denied. No token provided.' });
+        return res.status(401).redirect(loginUrl + "&alert=" + encodeURI("Access denied") + "&type=danger");
     }
 
     try {
@@ -14,8 +15,30 @@ const verifyToken = (req, res, next) => {
         req.userId = decoded.id;
         next();
     } catch (err) {
-        res.status(401).json({ error: 'Invalid token' });
+        return res.status(401).redirect(loginUrl + "&alert=" + encodeURI("Access denied") + "&type=danger");
     }
 };
 
-module.exports = verifyToken;
+const hasToken = () => {
+    return (req, res, next) => {
+        const token = req.cookies?.loginToken;
+        
+        if (!token) {
+            req.userToken = null;
+            return next();
+        }
+
+        try {
+            const decoded = jwt.verify(token, JWT_SECRET);
+            req.userToken = decoded.userId;
+            console.log('User ', req.userToken, ' has a token');
+            next();
+        } catch (err) {
+            console.error('JWT Verification Error:', err);
+            req.userToken = null;
+            next();
+        }
+    };
+};
+
+module.exports = { verifyToken, hasToken };

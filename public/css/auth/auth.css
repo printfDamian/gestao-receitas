@@ -2,7 +2,7 @@
     height: calc(100vh - 50px);
 }
 
-#register-form {
+#auth-form {
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.253), 0 6px 20px 0 rgba(0, 0, 0, 0.329);
     padding: 30px;
@@ -11,11 +11,11 @@
     width: 100%;
 }
 
-#register-form > div {
+#auth-form > div {
     padding: 10px;
 }
 
-.register-container {
+.auth-container {
     background-color: #f39342;
     width: 95%;
     display: flex;
@@ -32,54 +32,54 @@
     text-decoration: underline;
 }
 
-.registerLogoGR {
+.authLogoGR {
     display: none;
     width: 50%;
 }
 
 /* Small */
 @media only screen and (min-width: 576px) {
-    .register-container {
+    .auth-container {
         width: 500px;
     }
 }
 
 /* Medium */
 @media only screen and (min-width: 768px) {
-    .register-container {
+    .auth-container {
         width: 600px;
     }
 }
 
 /* Large */
 @media only screen and (min-width: 992px) {
-    .register-container {
+    .auth-container {
         width: 700px;
         margin: auto;
     }
-    .registerLogoGR {
+    .authLogoGR {
         display: block;
     }
 }
 
 /* X-Large */
 @media only screen and (min-width: 1200px) {
-    .register-container {
+    .auth-container {
         width: 700px;
         margin: auto;
     }
-    .registerLogoGR {
+    .authLogoGR {
         display: block;
     }
 }
 
 /* XX-Large */
 @media only screen and (min-width: 1400px) {
-    .register-container {
+    .auth-container {
         width: 700px;
         margin: auto;
     }
-    .registerLogoGR {
+    .authLogoGR {
         display: block;
     }
 }

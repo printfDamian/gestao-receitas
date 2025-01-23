@@ -1,43 +1,33 @@
-var express = require("express");
-var router = express.Router();
-var path = require("path");
-const fs = require("fs");
-const ejs = require("ejs");
-const userController = require('../../controllers/userController'); 
+const { renderFile } = require("ejs");
+const express = require("express");
+const router = express.Router();
+const path = require("path");
+const { login } = require('../../controllers/userController'); 
 
-const pathToTemplate = path.join(__dirname, "/../../views/templates/htmlTemplate.ejs");
+const htmlTemplate = path.join(__dirname, "/../../views/templates/htmlTemplate.ejs");
 
-router.get('/loginPage', (req, res) => {
-    const error = req.query.error;
-    fs.readFile(__dirname + "/../../views/auth/login.html", "utf8", (err, data) => {
-        if (err) return res.status(500).send(err.message);
-        
-        ejs.renderFile(pathToTemplate, {
+router.get("/login", async (req, res, next) => {
+    try {
+        const content = await renderFile(path.join(__dirname + "/../../views/auth/login.ejs"));
+        return res.render(htmlTemplate, {
             docTitle: "GR - Login",
             upperNavBar: true,
-            content: data,
             footer: true,
-            error: error
-        },
-        (err, str) => {
-            if (err) {
-                res.status(500).send(err.message);
-            } else {
-                res.status(200).send(str);
-            }
+            content: content,
+            token: req.userToken,
+            CustomCssFile: "auth/auth.css",
+            CustomJsFile: "auth/login.js"
         });
-    });
+    } catch (error) {
+        next(error); 
+    }
 });
 
 router.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).send(err.message);
-        }
-        res.redirect('/loginPage');
-    });
+    res.clearCookie('loginToken');
+    res.redirect('/login?alert=' + encodeURI("Logged out successfully") + '&type=success');
 });
 
-router.post('/login', userController.login);
+router.post('/login', login);
 
 module.exports = router;

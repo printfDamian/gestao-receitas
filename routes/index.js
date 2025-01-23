@@ -11,11 +11,12 @@ router.get("/", async (req, res, next) => {
     try {
         const recipes = await getRandomMeals(10);
         const content = await renderFile(path.join(__dirname, "..", "views/index.ejs"), { recipes });
-        res.render(htmlTemplate, {
+        return res.render(htmlTemplate, {
             docTitle: "GR - Home",
             upperNavBar: true,
             footer: true,
             content: content,
+            token: req.userToken,
             CustomCssFile: "index.css",
             CustomJsFile: null
         });
