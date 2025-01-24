@@ -1,4 +1,4 @@
-const axios = require("axios");
+const { getAllMeal, getMealById, getMealByCategory } = require('../models/mealModel');
 const https = require("https");
 
 const agent = new https.Agent({
@@ -6,14 +6,38 @@ const agent = new https.Agent({
 });
 
 const getAllMeals = async () => {
-    const response = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=", { httpsAgent: agent });
-    return response.data.meals;
+    return await getAllMeal();
+};
+
+const getMeals = async (page, pageSize) => {
+    const allMeals = await getAllMeal();
+    return await getSetOf(allMeals, page, pageSize);
+};
+
+const getMealsById = async (id) => {
+    return await getMealById(id);
+};
+
+const getMealsByCategory = async (category) => {
+    return await getMealByCategory(category);
 };
 
 const getRandomMeals = async (nrMeals) => {
-    const allMeals = await getAllMeals();
+    const allMeals = await getAllMeal();
     const shuffled = allMeals.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, nrMeals);
 };
 
-module.exports = { getAllMeals, getRandomMeals };
+const getSetOf = async (results, page, pageSize) => {
+    const maxPageSize = 30;
+    
+    if(pageSize > results.length || pageSize > maxPageSize) {
+        pageSize = maxPageSize;
+    }
+
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return results.slice(startIndex, endIndex);
+};
+
+module.exports = { getAllMeals, getRandomMeals, getMealsById, getMealsByCategory };

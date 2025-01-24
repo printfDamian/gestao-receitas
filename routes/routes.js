@@ -11,6 +11,7 @@ router.use(require('./auth/register'));
 router.use(require('./auth/login'));
 router.use(require('./recipes/explorer'));
 router.use(require('./recipes/category'));
+router.use(require('./recipes/recipeDetails'))
 
 router.use(require('./api/validations'));
 

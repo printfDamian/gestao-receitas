@@ -14,10 +14,9 @@ const agent = new https.Agent({
     rejectUnauthorized: false
 });
 
-router.get("/categories",async (req, res) => {
+router.get("/categoriesssssssssssssssssssssss",async (req, res) => {
     const response = await axios.get("HTTP://www.themealdb.com/api/json/v1/1/categories.php", { httpsAgent: agent });
     const categories = response.data.categories;
-    const user = req.session.user; 
     
         res.render("categories", {
             categories: categories,
@@ -27,7 +26,7 @@ router.get("/categories",async (req, res) => {
     
 });
 
-router.get("/category/:category", async (req, res) => {
+router.get("/categorysssssssssssssssssssssss/:category", async (req, res) => {
     try {
         const response = await axios.get("https://www.themealdb.com/api/json/v1/1/filter.php?c=" + req.params.category, { httpsAgent: agent });
         const meals = response.data.meals;

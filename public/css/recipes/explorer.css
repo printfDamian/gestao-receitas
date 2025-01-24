@@ -1,3 +1,96 @@
+.search-container {
+    margin-top: 40px;
+    margin-bottom: 0px;
+}
+
+.search{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 40px;
+    padding: 10px;
+}
+
+.search_input{
+    color: black;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    margin-top:5px;
+    caret-color:transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+}
+
+.search .search_input{
+    padding: 0 10px;
+    width: 550px;
+    caret-color:#f39342;
+    transition: width 0.4s linear;
+}
+    
+.search_icon:hover{
+    background: #bd631a;
+}
+
+.search_icon{
+    height: 50px;
+    width: 50px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    background-color:#f39342;
+}
+
+.cardContainer {
+    justify-content: space-around;
+}
+
 .card {
-    width: 200px;
+    width: 90%;
+}
+
+.card-body, .card-img-top {
+    outline: 1px solid rgb(205, 205, 205);
+}
+
+/* Small */
+@media only screen and (min-width: 576px) {
+    .card {
+        width: 45%;
+    }
+}
+
+/* Medium */
+@media only screen and (min-width: 768px) {
+    .card {
+        width: 45%;
+    }
+}
+
+/* Large */
+@media only screen and (min-width: 992px) {
+    .card {
+        width: 18%;
+    }
+}
+
+/* X-Large */
+@media only screen and (min-width: 1200px) {
+    .card {
+        width: 18%;
+    }
+}
+
+/* XX-Large */
+@media only screen and (min-width: 1400px) {
+    .card {
+        width: 18%;
+    }
 }

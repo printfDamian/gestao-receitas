@@ -13,7 +13,7 @@ const getAllMeal = async () => {
 
 const getMealById = async (id) => {
     const response = await axios.get("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id, { httpsAgent: agent });
-    return response.data.meals;
+    return response.data.meals[0];
 }
 
 const getMealByCategory = async (category) => {

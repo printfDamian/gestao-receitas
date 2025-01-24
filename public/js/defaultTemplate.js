@@ -1,6 +1,6 @@
 let params = new URLSearchParams(document.location.search);
 
-$(document).ready(function () {
+$(function() {
     if (params.get('alert')) {
         let type = params.get('type') || 'info';
         showAlert(params.get('alert'), type);
@@ -17,6 +17,11 @@ function showAlert(message, type = 'danger') {
 
     const body = document.querySelector('body');
     body.insertAdjacentHTML('afterbegin', alertHTML);
+
+    params.delete('alert');
+    params.delete('type');
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, document.title, newUrl);
 
     setTimeout(() => {
         const alert = document.querySelector('.alert');

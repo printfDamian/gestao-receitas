@@ -14,6 +14,7 @@ router.get("/register", async (req, res, next) => {
             upperNavBar: true,
             footer: true,
             content: content,
+            token: req.userToken,
             CustomCssFile: "auth/auth.css",
             CustomJsFile: "auth/register.js"
         });
