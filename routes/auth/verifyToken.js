@@ -14,6 +14,8 @@ const verifyToken = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.userId = decoded.userId;
+        req.userEmail = decoded.email;
+        req.userRole = decoded.role;
         next();
     } catch (err) {
         return res.status(401).redirect(loginUrl + "&alert=" + encodeURI("Access denied") + "&type=danger");
@@ -23,20 +25,30 @@ const verifyToken = (req, res, next) => {
 const hasToken = () => {
     return (req, res, next) => {
         const token = req.cookies?.loginToken;
-        
+        req.userRole = null;
         if (!token) {
             req.userToken = null;
+            res.locals.token = null;
+            res.locals.role = null;
             return next();
         }
 
         try {
             const decoded = jwt.verify(token, JWT_SECRET);
+            req.userId = decoded.userId;
+            req.userEmail = decoded.email;
+            req.userRole = decoded.role;
             req.userToken = decoded.userId;
-            console.log('User ', req.userToken, ' has a token');
+            res.locals.token = decoded.userId;
+            res.locals.role = decoded.role;
+            console.log('User ', req.userId, ' has a token');
+            console.log('Token Middleware - After decode role:', req.userRole);
             next();
         } catch (err) {
             console.error('JWT Verification Error:', err);
             req.userToken = null;
+            res.locals.token = null;
+            res.locals.role = null;
             next();
         }
     };

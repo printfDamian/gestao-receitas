@@ -65,10 +65,26 @@ const deleteFavorite = async (id) => {
   }
 };
 
+const getFavoriteRecipes = async () => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT fr.*, u.name as user_name 
+       FROM favorite_recipes fr 
+       JOIN users u ON fr.user_id = u.id 
+       ORDER BY fr.CREATED_AT DESC`
+    );
+    return rows || [];
+  } catch (error) {
+    console.error("Error getting favorite recipes:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   createFavorite,
   getFavoriteByRecipeId,
   getFavoriteByUserId,
   getFavorite,
   deleteFavorite,
+  getFavoriteRecipes
 };

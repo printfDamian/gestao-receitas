@@ -32,13 +32,14 @@ router.get("/explorer", async (req, res, next) => {
       path.join(__dirname, "../..", "views/recipes/explorer.ejs"),
       { recipes }
     );
-
+console.log("asasdsadasdadsaadsasd: ", req.userRole);
     return res.render(htmlTemplate, {
       docTitle: "GR - Explorer",
       upperNavBar: true,
       footer: true,
       content: content,
       token: req.userToken,
+      role: req.userRole,
       CustomCssFiles: ["recipes/explorer.css"],
       CustomJsFiles: ["recipes/explorer.js", "recipes/search.js"],
     });
