@@ -1,0 +1,16 @@
+<div class="scrollContainer mt-4">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <% recipes.forEach((recipe) => { %>
+                <div class="swiper-slide">
+                    <%- include('card', { recipe: recipe }) %>
+                </div>  
+            <% }) %>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</div>
+
+<script src="/js/swiperIndex.js"></script>

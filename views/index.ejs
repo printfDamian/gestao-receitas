@@ -1,7 +1,13 @@
-<content>
+<section class="content-container">
+    <div class="container search-container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="search">
+                <input class="search_input" type="text" name="" placeholder="Search here...">
+                <a href="#" class="search_icon"><i class="bi bi-search"></i></a>
+            </div>
+        </div>
+    </div>
 
-    <h1>
-        Home page
-    </h1>
-
-</content>
+    <%# Listar 10/5 Cards em forma de lista random/sugestões horizontal com scroll %>
+    <%- include('recipes/recipesCards/cardsScrollListContainer.ejs', { recipes: recipes }) %>
+</section>

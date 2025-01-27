@@ -1,30 +1,57 @@
-var express = require("express");
-var router = express.Router();
-var path = require("path");
+const express = require("express");
+const router = express.Router();
+const path = require("path");
 const fs = require("fs");
 const ejs = require("ejs");
-const pathToTemplate = path.join(__dirname, "views/htmlTemplate.ejs");
+const pathToTemplate = path.join(
+	__dirname,
+	"/../views/templates/htmlTemplate.ejs"
+);
 
+router.use(require("./auth/verifyToken").hasToken());
 
+router.use(require("./index"));
+router.use(require("./auth/register"));
+router.use(require("./auth/login"));
+router.use(require("./recipes/explorer"));
+router.use(require("./recipes/recipeDetails"));
+router.use(require("./recipes/favorites"));
+router.use(require("./recipes/myCollections"));
 
+router.use(require("./api/validations"));
+router.use(require("./api/recipes"));
+router.use(require("./api/favorite"));
+router.use(require("./user/profile.js"));
+router.use(require("./api/collections"));
 
-router.get('*', (req, res) => {
-    fs.readFile(__dirname + "/views/erro.ejs", "utf8", (err, data) => {
-        if (err) return res.status(500).send(err.message);
-        
-        ejs.renderFile(pathToTemplate, {
-            docTitle: "GR - Register",
-            upperNavBar: true,
-            content: data,
-            footer: true
-        },
-        (err, str) => {
-            if (err) {
-                res.status(500).send(err.message);
-            } else {
-                res.status(200).send(str);
-            }
-        });
-    });
+// Error handling
+router.all("*", (req, res, next) => {
+	const error = new Error("Page not found");
+	error.statusCode = 404;
+	next(error);
 });
+
+router.use(async (err, req, res, next) => {
+	console.error("Error:", err.message);
+
+	try {
+		const errorPage = await ejs.renderFile(
+			path.join(__dirname, "/../views/erro.ejs")
+		);
+
+		res.status(err.statusCode || 500).render(pathToTemplate, {
+			docTitle: "GR - Error",
+			upperNavBar: true,
+			content: errorPage,
+			footer: true,
+			token: req.userToken,
+			CustomCssFiles: null,
+			CustomJsFiles: null,
+		});
+	} catch (renderError) {
+		console.error("Error rendering error page:", renderError);
+		res.status(500).send("Internal Server Error");
+	}
+});
+
 module.exports = router;

@@ -1,18 +1,28 @@
+const { renderFile } = require("ejs");
 const express = require("express");
-const ejs = require("ejs");
-const fs = require("fs");
-const path = require("path");
-const { User } = require('../models/User');
 const router = express.Router();
+const path = require("path");
+const { getRandomMeals } = require("../controllers/mealController");
+
+const htmlTemplate = path.join(__dirname, "..", "views/templates/htmlTemplate.ejs");
 
 // Home page route
-router.get("/", (req, res) => {
-    const user = req.session.user;
-    res.render("indexLoggedIn", {
-        user: user,
-        docTitle: "GR - Home"
-    }); 
+router.get("/", async (req, res, next) => {
+    try {
+        const recipes = await getRandomMeals(10);
+        const content = await renderFile(path.join(__dirname, "..", "views/index.ejs"), { recipes });
+        return res.render(htmlTemplate, {
+            docTitle: "GR - Home",
+            upperNavBar: true,
+            footer: true,
+            content: content,
+            token: req.userToken,
+            CustomCssFiles: ["index.css"],
+            CustomJsFiles: ["index.js"]
+        });
+    } catch (error) {
+        next(error); 
+    }
 });
 
-
-module.exports = router;    
+module.exports = router;

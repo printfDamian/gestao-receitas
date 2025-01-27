@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%- docTitle %></title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/swiper-bundle.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/templates/templateDefault.css">
+    <% if (CustomCssFiles) { %>
+        <% CustomCssFiles.forEach((CustomCssFile) => { %>
+            <link rel="stylesheet" href="/css/<%- CustomCssFile %>">
+        <% }) %>
+    <% } %>
+    <link rel="icon" type="image/x-icon" href="/images/GR-Logo.png">
+</head>
+<body>
+    <% if (upperNavBar) { %>
+        <%- include('../modules/upperNavBar', { token: token }) %>
+    <% } %>
+    
+    <main class="content-container">
+        <%- content %>
+    </main>
+    
+    <% if (footer) { %>
+        <%- include('../modules/footer') %>
+    <% } %>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/swiper-bundle.min.js"></script>
+    <script src="/js/defaultTemplate.js"></script>
+    <% if (CustomJsFiles) { %>
+        <% CustomJsFiles.forEach((CustomJsFile) => { %>
+            <script src="/js/<%- CustomJsFile %>"></script>
+        <% }) %>
+    <% } %>
+</body>
+</html>

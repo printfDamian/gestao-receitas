@@ -1,18 +1,54 @@
 DROP DATABASE IF EXISTS gestao_receitas;
 CREATE DATABASE gestao_receitas;
- --CREATE DATABASE gestao_receitas; created for the creation from the mvc structure
-use gestao_receitas;
+USE gestao_receitas;
 
 CREATE TABLE users (
-    id VARCHAR(255) PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255)  NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role INT NOT NULL,
     CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE recipes (
-    id INT PRIMARY KEY NOT NULL,
+CREATE TABLE favorite_recipes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    recipe_id INT NOT NULL,
     CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE collections (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE collection_recipes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    collection_id INT NOT NULL,
+    recipe_id INT NOT NULL,
+    CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (collection_id) REFERENCES collections(id)
+);
+
+INSERT INTO users (
+    name,
+    email,
+    password,
+    role
+) VALUES (
+    'Admin',
+    'admin@gestao.receitas',
+    '$2a$10$tFdDiY885VtLkFFR.U0T9O2.HragJ3eRenDP4wlHiHtv2wO7r4LGe',
+    1
+);
+
+ -- 1: Admin, 2: User
+ -- Password: Admin123

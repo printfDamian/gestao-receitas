@@ -131,3 +131,6 @@ dist
 
 # project
 .db/datasetIngredientPriced.json
+
+#vscode
+.vscode/

@@ -1,0 +1,32 @@
+<div class="container mt-5">
+
+    <div class="container search-container">
+        <div class="input-container d-flex justify-content-center h-100">
+            <div class="search">
+                <input class="search_input" type="text" name="" placeholder="Search here...">
+                <a href="#" class="search_icon"><i class="bi bi-search"></i></a>
+            </div>
+        </div>
+
+        <div class="tips-container">
+            <div class="tips-content"></div>
+        </div>
+    </div>
+
+    <% if (recipes && recipes.length > 0) { %>
+        <%- include('../recipes/recipesCards/cardsContainer.ejs', { recipes: recipes }) %>
+
+        <div id="show-more-container" class="p-4 text-center">
+            <button type="button" id="show-more" class="btn btn-outline-dark my-4 h-100">Show more</button>
+            <p id="no-more-recipes" class='text-muted'>No more recipes to show</p>
+            <p id="no-results" class='text-muted'>Can't find recipes</p>
+        </div>
+
+    <% } else { %>
+        <div class="text-center mt-5">
+            <h3 class="text-muted">You don't have any favorites yet</h3>
+            <p>Start by adding your favorite recipes to it!</p>
+            <a href="/explorer" class="btn btn-primary mt-3">Explore Recipes</a>
+        </div>
+    <% } %>
+</div>

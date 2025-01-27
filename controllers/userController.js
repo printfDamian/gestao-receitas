@@ -1,63 +1,128 @@
-const { auth } = require('../firebase');
-const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
-const { User } = require('../models/User');
 const jwt = require('jsonwebtoken');
+const { createUser, getUserByEmail, getUserById, updateUserInDb } = require('../models/userModel');
+const bcrypt = require('bcryptjs');
+const validate = require('../configs/validations');
+const JWT_SECRET = process.env.SECRETKEY;
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+function validateCredentials(name, email, password) {
+    if (name) {
+        if (!name || !email || !password) {
+            return 'All fields are required';
+        }
+    } else {
+        if (!email || !password) {
+            return 'All fields are required';
+        }
+    }
 
-exports.register = async (req, res) => {
+    if (!validate.email(email)) {
+        return validate.emailRegex().description;
+    }
+
+    if (!validate.password(password)) {
+        return validate.passwordRegex().description;
+    }
+
+    return null;
+}
+
+const register = async (req, res) => {
     try {
-        const { email, password, name } = req.body;
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const firebaseUser = userCredential.user;
+        let { name, email, password, remember } = req.body;
 
-        const user = await User.create({
-            id: firebaseUser.uid,
-            email: firebaseUser.email,
-            name: req.body.name
+        name = name.trim();
+        email = email.trim();
+        password = password.trim();
+        
+        const error = validateCredentials(name, email, password)
+        if (error) return res.status(400).json({ error: error });
+    
+        const user = await getUserByEmail(email);
+        if (user) return res.status(400).json({ error: 'User already exists'});
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = await createUser({
+            email,
+            password: hashedPassword,
+            name
         });
 
-        const token = await firebaseUser.getIdToken();
-
-        // Generate JWT
-        const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
-
-        // Store JWT and user data in session
-        req.session.token = jwtToken;
-        req.session.user = user;
-
-        res.redirect('/dashboard'); // Redirect to the dashboard page
-    } catch (err) {
-        res.redirect('/registerPage?error=' + encodeURIComponent(err.message));
-    }
-};
-
-exports.login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const firebaseUser = userCredential.user;
-
-        let user = await User.findOne({ where: { id: firebaseUser.uid } });
-        if (!user) {
-            user = await User.create({
-                id: firebaseUser.uid,
-                email: firebaseUser.email,
-                name: firebaseUser.displayName || ''
-            });
+        let expires = '24h';
+        if(remember === true) {
+            expires = '1y';
         }
 
-        const token = await firebaseUser.getIdToken();
+        const token = jwt.sign(
+            { userId: newUser.insertId, email: email },
+            JWT_SECRET,
+            { expiresIn: expires }
+        );
 
-        // Generate JWT
-        const jwtToken = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+        return res.status(201).json({
+            message: 'User registered successfully',
+            token,
+            userId: newUser.insertId
+        });
 
-        // Store JWT and user data in session
-        req.session.token = jwtToken;
-        req.session.user = user;
-
-        res.redirect('/dashboard'); // Redirect to the dashboard page
-    } catch (err) {
-        res.redirect('/loginPage?error=' + encodeURIComponent(err.message));
+    } catch (error) {
+        console.error('Registration error:', error);
+        return res.status(500).json({ error: 'Registration failed' });
     }
 };
+
+const login = async (req, res) => {
+    try {
+        let { email, password, remember } = req.body;
+
+        email = email.trim();
+        password = password.trim();
+
+        const error = validateCredentials(null, email, password)
+        if (error) return res.status(400).json({ error: error });
+
+        const user = await getUserByEmail(email);
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        if (!bcrypt.compareSync(password, user.password)) {
+            return res.status(401).send({ error: 'Wrong password' });
+        }
+
+        let expires = '24h';
+        if(remember === true) {
+            expires = '1y';
+        }
+
+        const token = jwt.sign(
+            { userId: user.id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: expires }
+        );
+        
+        res.cookie('loginToken', token, {signed: true});
+
+        return res.status(201).json({
+            message: 'Logged in successfully',
+            token,
+            userId: user.id
+        });
+
+    } catch (err) {
+        res.send({ error: 'Login failed' });
+        console.log(err);
+    }
+};
+
+const updateUser = async (name, email, userId) => {
+    try {
+        await updateUserInDb(name, email, userId);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+};
+
+module.exports = { register, login, getUserById, updateUser };

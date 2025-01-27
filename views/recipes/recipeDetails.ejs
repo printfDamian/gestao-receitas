@@ -1,0 +1,107 @@
+<div class="container recipe-details mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="recipe-image-container mb-4">
+                <img src="<%= recipe.strMealThumb %>" class="img-fluid rounded shadow" alt="<%= recipe.strMeal %>">
+            </div>
+            
+            <div class="recipe-metrics card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4"><%= recipe.strMeal %></h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span><i class="bi bi-globe"></i> <%= recipe.strArea %></span>
+                        <span><i class="bi bi-tag"></i> <%= recipe.strCategory %></span>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <i class="bi bi-clock"></i>
+                            <span><%= calculateTime(recipe.strInstructions) %> min</span>
+                        </div>
+                        <div class="metric-item">
+                            <i class="bi bi-lightning"></i>
+                            <span><%= calculateDifficulty(recipe.strInstructions, 
+                                Array.from({length: 20}, (_, i) => recipe[`strIngredient${i+1}`]).filter(Boolean)) %></span>
+                        </div>
+                        <div class="metric-item">
+                            <i class="bi bi-currency-euro"></i>
+                            <span><%= calculateCost(recipe) %>€</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <% if (recipe.strYoutube) { 
+                const videoId = recipe.strYoutube.split('v=')[1];
+            %>
+                <div class="video-container mb-4">
+                    <iframe 
+                        src="https://www.youtube-nocookie.com/embed/<%= videoId %>"
+                        title="Recipe Video"
+                        frameborder="0"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            <% } %>
+
+            <div class="ingredients-section card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Ingredients</h4>
+                    <div class="ingredients-grid">
+                        <% for(let i = 1; i <= 20; i++) { 
+                            const ingredient = recipe['strIngredient' + i];
+                            const measure = recipe['strMeasure' + i];
+                            if(ingredient && ingredient.trim() !== '') { %>
+                                <div class="ingredient-item" 
+                                     data-bs-toggle="modal" 
+                                     data-bs-target="#ingredientModal"
+                                     data-ingredient="<%= ingredient %>">
+                                    <img src="https://www.themealdb.com/images/ingredients/<%= ingredient %>.png" 
+                                         alt="<%= ingredient %>"
+                                         class="ingredient-thumb">
+                                    <div class="ingredient-info">
+                                        <span class="ingredient-name"><%= ingredient %></span>
+                                        <span class="ingredient-measure"><%= measure %></span>
+                                    </div>
+                                </div>
+                        <% } } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="instructions-section card mt-4">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Instructions</h4>
+            <% 
+                const steps = recipe.strInstructions.split(/\r\n|\n/).filter(step => step.trim());
+                steps.forEach((step, index) => { 
+            %>
+                <div class="instruction-step">
+                    <span class="step-number"><%= index + 1 %></span>
+                    <p class="step-text"><%= step.trim() %></p>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ingredientModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ingredient Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="ingredientModalImg" src="" alt="" class="img-fluid mb-3">
+                <h4 id="ingredientModalTitle"></h4>
+                <p id="ingredientModalDesc" class="text-muted"></p>
+            </div>
+        </div>
+    </div>
+</div>
