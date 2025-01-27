@@ -1,4 +1,10 @@
-const { getAllMeals, getMealById, getMealsByCategory, getCategories, getMealByName } = require('../models/mealModel');
+const { 
+    getAllMeals, 
+    getMealById, 
+    getMealsByCategory, 
+    getCategories, 
+    getMealByName 
+} = require('../models/mealModel');
 
 let recipesCache = null;
 

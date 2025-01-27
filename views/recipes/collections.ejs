@@ -1,0 +1,72 @@
+<div class="container mt-5">    
+    
+    <div class="collections-container">
+        <h5>Create collection</h5>
+
+        <button class="bi bi-folder-plus add-collection"></button>
+
+
+    <% if (collections && collections.length > 0) { %>
+            <% collections.forEach(collection => { %>
+                <div class="collection-section mb-5" data-id="<%= collection.id %>">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="collection-title"><%= collection.name %></h3>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-warning edit-collection">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-outline-danger delete-collection">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cardContainer">
+                        <% if (collection.recipes && collection.recipes.length > 0) { %>
+                            <% collection.recipes.forEach(recipe => { %>
+                                <div class="recipe-card" data-recipe-id="<%= recipe.idMeal %>">
+                                    <%- include('recipesCards/card', { recipe: recipe }) %>
+                                    <button class="btn btn-danger remove-recipe" 
+                                            data-collection-id="<%= collection.id %>" 
+                                            data-recipe-id="<%= recipe.idMeal %>">
+                                        Remove
+                                    </button>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <p class="text-muted">No recipes in this collection</p>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        </div>
+        <div class="text-center mt-5">
+            <h3 class="text-muted">You don't have any collections yet</h3>
+            <p>Start by creating a collection and adding your favorite recipes to it!</p>
+            <a href="/explorer" class="btn btn-primary mt-3">Explore Recipes</a>
+        </div>
+    <% } %>
+
+</div>
+
+<div class="modal fade" id="addCollectionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Collection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="collectionName">Collection Name</label>
+                    <input type="text" class="form-control" id="collectionName" placeholder="Enter collection name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="createCollectionBtn">Create</button>
+            </div>
+        </div>
+    </div>
+</div>

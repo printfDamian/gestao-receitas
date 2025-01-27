@@ -6,45 +6,45 @@ const { getSetOfMeals } = require("../../controllers/mealController");
 const { getFavoritestate } = require("../../controllers/favoriteController");
 
 const htmlTemplate = path.join(
-  __dirname,
-  "../..",
-  "views/templates/htmlTemplate.ejs"
+	__dirname,
+	"../..",
+	"views/templates/htmlTemplate.ejs"
 );
 
 // Explore recipes page route
 router.get("/explorer", async (req, res, next) => {
-  try {
-    const recipes = await getSetOfMeals(1, 20);
+	try {
+		const recipes = await getSetOfMeals(1, 20);
 
-    if (req.userToken) {
-      const userId = req.userToken;
-      const favoritePromises = recipes.map((recipe) =>
-        getFavoritestate(userId, recipe.idMeal)
-      );
-      const favorites = await Promise.all(favoritePromises);
+		if (req.userToken) {
+			const userId = req.userToken;
+			const favoritePromises = recipes.map((recipe) =>
+				getFavoritestate(userId, recipe.idMeal)
+			);
+			const favorites = await Promise.all(favoritePromises);
 
-      recipes.forEach((recipe, index) => {
-        recipe.isFavorite = favorites[index];
-      });
-    }
+			recipes.forEach((recipe, index) => {
+				recipe.isFavorite = favorites[index];
+			});
+		}
 
-    const content = await renderFile(
-      path.join(__dirname, "../..", "views/recipes/explorer.ejs"),
-      { recipes }
-    );
+		const content = await renderFile(
+			path.join(__dirname, "../..", "views/recipes/explorer.ejs"),
+			{ recipes }
+		);
 
-    return res.render(htmlTemplate, {
-      docTitle: "GR - Explorer",
-      upperNavBar: true,
-      footer: true,
-      content: content,
-      token: req.userToken,
-      CustomCssFiles: ["recipes/explorer.css"],
-      CustomJsFiles: ["recipes/explorer.js", "recipes/search.js"],
-    });
-  } catch (error) {
-    next(error);
-  }
+		return res.render(htmlTemplate, {
+			docTitle: "GR - Explorer",
+			upperNavBar: true,
+			footer: true,
+			content: content,
+			token: req.userToken,
+			CustomCssFiles: ["recipes/explorer.css"],
+			CustomJsFiles: ["apiRecipesFunc/explorer.js", "recipes/search.js", "recipes/favorite.js", "recipes/collection.js"],
+		});
+	} catch (error) {
+		next(error);
+	}
 });
 
 module.exports = router;
