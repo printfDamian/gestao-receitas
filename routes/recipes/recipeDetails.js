@@ -29,8 +29,8 @@ router.get("/recipeDetails", async (req, res, next) => {
             footer: true,
             content: content,
             token: req.userToken,
-            CustomCssFiles: null,
-            CustomJsFiles: null,
+            CustomCssFiles: ["recipes/recipeDetails.css"],
+            CustomJsFiles: ["recipes/recipeDetails.js"],
         });
     } catch (error) {
         next(error);

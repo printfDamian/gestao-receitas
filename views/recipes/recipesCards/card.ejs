@@ -1,49 +1,46 @@
 <div class="card mb-1">
-  <img
-    src="<%= recipe.strMealThumb %>"
-    class="card-img-top"
-    alt="<%= recipe.strMeal %>"
-  />
-  <div class="card-body">
-    <h5 class="card-title">
-      <strong>Name: </strong>
-      <%= recipe.strMeal %>
-    </h5>
-    <p class="card-text">
-      <strong>Type: </strong>
-      <%= recipe.strCategory %>
-    </p>
+	<img src="<%= recipe.strMealThumb %>" class="card-img-top" alt="<%= recipe.strMeal %>" />
+	<div class="card-body">
+		<h5 class="card-title">
+			<strong>Name: </strong>
+			<%= recipe.strMeal %>
+		</h5>
+		<p class="card-text">
+			<strong>Type: </strong>
+			<%= recipe.strCategory %>
+		</p>
 
-    <div class="card-footer">
-      <% if (recipe.isFavorite) { %>
-      <button class="bi bi-star-fill text-warning favorite"></button>
-      <% } else { %>
-      <button class="bi bi-star favorite"></button>
-      <% } %>
-      <a href="/recipeDetails?id=<%= recipe.idMeal %>"
-        ><button class="btn btn-outline-warning">Meal details</button></a
-      >
+		<div class="card-footer">
+			<% if (recipe.isFavorite) { %>
+				<button class="bi bi-star-fill text-warning favorite"></button>
+			<% } else { %>
+				<button class="bi bi-star favorite"></button>
+			<% } %>
+
+			<button class="bi bi-collection collection"></button>
+
+			<a href="/recipeDetails?id=<%= recipe.idMeal %>"><button class="btn btn-outline-warning">Meal details</button></a>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="collectionsModal-<%= recipe.idMeal %>" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add to Collection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="collections-list">
+                    <p class="text-muted no-collections-message" style="display: none;">
+                        You don't have any collections yet
+                    </p>
+                </div>
+                <div class="mt-3">
+                    <a href="/myCollections" class="btn btn-primary mt-2 create-collection">My Collections</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-
-<% /* %> Old design
-<div class="card mb-1" style="width: 90%">
-  <img
-    src="<%= recipe.strMealThumb %>"
-    class="card-img-top"
-    alt="<%= recipe.strMeal %>"
-  />
-  <div class="card-body">
-    <h5 class="card-title">
-      <strong>Name: </strong>
-      <%= recipe.strMeal %>
-    </h5>
-    <p class="card-text">
-      <strong>Type: </strong>
-      <%= recipe.strCategory %>
-    </p>
-    <button class="btn btn-outline-warning">Meal details</button>
-  </div>
-</div>
-<% */ %>
