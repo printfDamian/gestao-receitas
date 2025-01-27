@@ -15,8 +15,8 @@ router.get("/register", async (req, res, next) => {
             footer: true,
             content: content,
             token: req.userToken,
-            CustomCssFile: "auth/auth.css",
-            CustomJsFile: "auth/register.js"
+            CustomCssFiles: ["auth/auth.css"],
+            CustomJsFiles: ["auth/register.js"]
         });
     } catch (error) {
         next(error); 

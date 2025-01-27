@@ -1,0 +1,49 @@
+<div class="card mb-1">
+  <img
+    src="<%= recipe.strMealThumb %>"
+    class="card-img-top"
+    alt="<%= recipe.strMeal %>"
+  />
+  <div class="card-body">
+    <h5 class="card-title">
+      <strong>Name: </strong>
+      <%= recipe.strMeal %>
+    </h5>
+    <p class="card-text">
+      <strong>Type: </strong>
+      <%= recipe.strCategory %>
+    </p>
+
+    <div class="card-footer">
+      <% if (recipe.isFavorite) { %>
+      <button class="bi bi-star-fill text-warning favorite"></button>
+      <% } else { %>
+      <button class="bi bi-star favorite"></button>
+      <% } %>
+      <a href="/recipeDetails?id=<%= recipe.idMeal %>"
+        ><button class="btn btn-outline-warning">Meal details</button></a
+      >
+    </div>
+  </div>
+</div>
+
+<% /* %> Old design
+<div class="card mb-1" style="width: 90%">
+  <img
+    src="<%= recipe.strMealThumb %>"
+    class="card-img-top"
+    alt="<%= recipe.strMeal %>"
+  />
+  <div class="card-body">
+    <h5 class="card-title">
+      <strong>Name: </strong>
+      <%= recipe.strMeal %>
+    </h5>
+    <p class="card-text">
+      <strong>Type: </strong>
+      <%= recipe.strCategory %>
+    </p>
+    <button class="btn btn-outline-warning">Meal details</button>
+  </div>
+</div>
+<% */ %>
