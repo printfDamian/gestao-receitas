@@ -26,7 +26,6 @@ const getRecipesInCollection = async (collectionId) => {
     const recipes = await Promise.all(
         recipeIds.map(async recipe => {
             const mealData = await getMealById(recipe.recipe_id);
-            // Add favorite state
             const favoriteState = await getFavoriteByRecipeId(recipe.recipe_id);
             return {
                 ...mealData,
