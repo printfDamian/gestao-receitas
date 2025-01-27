@@ -3,6 +3,8 @@ const { createUser, getUserByEmail } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const validate = require('../configs/validations');
 const JWT_SECRET = process.env.SECRETKEY;
+const { getUserById } = require('../models/userModel');
+const { get } = require('jquery');
 
 function validateCredentials(name, email, password) {
     if (name) {
@@ -116,4 +118,4 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { register, login };
+module.exports = { register, login, getUserById};

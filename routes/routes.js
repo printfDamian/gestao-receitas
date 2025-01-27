@@ -20,6 +20,7 @@ router.use(require("./recipes/favorites"));
 router.use(require("./api/validations"));
 router.use(require("./api/recipes"));
 router.use(require("./api/favorite"));
+router.use(require("./user/profile.js"));
 
 // Error handling
 router.all("*", (req, res, next) => {
