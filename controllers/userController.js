@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const { createUser, getUserByEmail } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const validate = require('../configs/validations');
-const { error } = require('jquery');
 const JWT_SECRET = process.env.SECRETKEY;
 
 function validateCredentials(name, email, password) {
