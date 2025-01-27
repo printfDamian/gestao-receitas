@@ -27,7 +27,16 @@ const getUserByEmail = async (email) => {
 
 const createUser = async (userData) => {
 	const { name, email, password } = userData;
-	return await pool.query('INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)', [name, email, password, role]);
+	try {
+        const [rows] = await pool.query(
+			'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)', 
+			[name, email, password, role]
+		);
+		return rows || null;
+	} catch (err) {
+        console.log(err);
+        throw err;
+    }
 }
 
 const updateUser = async (name, email, password, id) => {

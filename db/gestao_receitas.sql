@@ -1,7 +1,6 @@
 DROP DATABASE IF EXISTS gestao_receitas;
 CREATE DATABASE gestao_receitas;
-
-use gestao_receitas;
+USE gestao_receitas;
 
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -29,3 +28,18 @@ CREATE TABLE recipes_collection (
     CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+INSERT INTO users (
+    name,
+    email,
+    password,
+    role
+) VALUES (
+    'Admin',
+    'admin@gestao.receitas',
+    '$2a$10$tFdDiY885VtLkFFR.U0T9O2.HragJ3eRenDP4wlHiHtv2wO7r4LGe',
+    1
+);
+
+ -- 1: Admin, 2: User
+ -- Password: Admin123

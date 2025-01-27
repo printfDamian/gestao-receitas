@@ -17,8 +17,8 @@ router.get("/", async (req, res, next) => {
             footer: true,
             content: content,
             token: req.userToken,
-            CustomCssFile: "index.css",
-            CustomJsFile: null
+            CustomCssFiles: ["index.css"],
+            CustomJsFiles: ["index.js"]
         });
     } catch (error) {
         next(error); 

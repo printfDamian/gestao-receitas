@@ -15,8 +15,8 @@ router.get("/login", async (req, res, next) => {
             footer: true,
             content: content,
             token: req.userToken,
-            CustomCssFile: "auth/auth.css",
-            CustomJsFile: "auth/login.js"
+            CustomCssFiles: ["auth/auth.css"],
+            CustomJsFiles: ["auth/login.js"]
         });
     } catch (error) {
         next(error); 

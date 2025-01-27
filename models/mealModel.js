@@ -1,29 +1,83 @@
-const axios = require("axios");
-const https = require('https');
+const fetch = require('node-fetch');
 
-// Create HTTPS agent with proper SSL/TLS config
-const agent = new https.Agent({
-    rejectUnauthorized: false // Note: Only use in development/testing
-});
+const apiURL = "https://www.themealdb.com/api/json/v1/1/";
 
-const getAllMeal = async () => {
-    const response = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=", { httpsAgent: agent });
-    return response.data.meals;
+const getMealByName = async (name) => {
+    console.log("getMealByName: ", name);
+    const response = await fetch(apiURL + "search.php?s=" + name);
+    const data = await response.json();
+    return data.meals;
 }
 
 const getMealById = async (id) => {
-    const response = await axios.get("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id, { httpsAgent: agent });
-    return response.data.meals[0];
-}
-
-const getMealByCategory = async (category) => {
-    const response = await axios.get("https://www.themealdb.com/api/json/v1/1/filter.php?c=" + category, { httpsAgent: agent });
-    return response.data.meals;
+    console.log("getMealById: ", id);
+    const response = await fetch(apiURL + "lookup.php?i=" + id);
+    const data = await response.json();
+    return data.meals[0];
 }
 
 const getRandomMeal = async () => {
-    const response = await axios.get("https://www.themealdb.com/api/json/v1/1/random.php", { httpsAgent: agent });
-    return response.data.meals;
+    console.log("getRandomMeal");
+    const response = await fetch(apiURL + "random.php");
+    const data = await response.json();
+    return data.meals;
 }
 
-module.exports = { getAllMeal, getMealById, getMealByCategory, getRandomMeal };
+// limited to 25 meals
+const getAllMeals = async () => {
+    console.log("getAllMeals");
+    const response = await fetch(apiURL + "search.php?s=");
+    const data = await response.json();
+    return data.meals;
+}
+
+const getMealsByCategory = async (category) => {
+    console.log("getMealsByCategory: ", category);
+    const response = await fetch(apiURL + "filter.php?c=" + category);
+    const data = await response.json();
+    return data.meals;
+}
+
+const getMealsByArea = async (area) => {
+    console.log("getMealsByArea: ", area);
+    const response = await fetch(apiURL + "filter.php?a=" + area);
+    const data = await response.json();
+    return data.meals;
+}
+
+const getMealsByIngredient = async (ingredient) => {
+    console.log("getMealsByIngredient: ", ingredient);
+    const response = await fetch(apiURL + "filter.php?i=" + ingredient);
+    const data = await response.json();
+    return data.meals;
+}
+
+const getMealsByLetter = async (letter) => {
+    console.log("getMealsByLetter: ", letter);
+    const response = await fetch(apiURL + "search.php?f=" + letter);
+    const data = await response.json();
+    return data.meals;
+}
+
+const getCategories = async () => {
+    console.log("getCategories");
+    const response = await fetch(apiURL + "categories.php");
+    const data = await response.json();
+    return data.categories;
+}
+
+const getAreas = async () => {
+    console.log("getAreas");
+    const response = await fetch(apiURL + "list.php?a=list");
+    const data = await response.json();
+    return data.meals;
+}
+
+const getIngredients = async () => {
+    console.log("getIngredients");
+    const response = await fetch(apiURL + "list.php?i=list");
+    const data = await response.json();
+    return data.meals;
+}
+
+module.exports = { getMealByName, getMealById, getRandomMeal, getAllMeals, getMealsByCategory, getMealsByArea, getMealsByIngredient, getMealsByLetter, getCategories, getAreas, getIngredients };

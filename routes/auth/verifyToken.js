@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.SECRETKEY;
 
 const verifyToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    // const authHeader = req.headers['authorization'];
+    // const token = authHeader && authHeader.split(' ')[1];
+    const token = req.cookies?.loginToken;
     let loginUrl = "/login?destination=" + req.originalUrl;
 
     if (!token) {
@@ -12,7 +13,7 @@ const verifyToken = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        req.userId = decoded.id;
+        req.userId = decoded.userId;
         next();
     } catch (err) {
         return res.status(401).redirect(loginUrl + "&alert=" + encodeURI("Access denied") + "&type=danger");

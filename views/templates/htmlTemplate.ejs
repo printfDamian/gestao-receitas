@@ -9,8 +9,10 @@
     <link rel="stylesheet" type="text/css" href="/css/bootstrap-icons.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="/css/templates/templateDefault.css">
-    <% if (CustomCssFile) { %>
-        <link rel="stylesheet" href="/css/<%- CustomCssFile %>">
+    <% if (CustomCssFiles) { %>
+        <% CustomCssFiles.forEach((CustomCssFile) => { %>
+            <link rel="stylesheet" href="/css/<%- CustomCssFile %>">
+        <% }) %>
     <% } %>
     <link rel="icon" type="image/x-icon" href="/images/GR-Logo.png">
 </head>
@@ -20,8 +22,10 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/swiper-bundle.min.js"></script>
     <script src="/js/defaultTemplate.js"></script>
-    <% if (CustomJsFile) { %>
-        <script src="/js/<%- CustomJsFile %>"></script>
+    <% if (CustomJsFiles) { %>
+        <% CustomJsFiles.forEach((CustomJsFile) => { %>
+            <script src="/js/<%- CustomJsFile %>"></script>
+        <% }) %>
     <% } %>
     
     <% if (upperNavBar) { %>

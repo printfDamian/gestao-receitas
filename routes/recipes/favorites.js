@@ -2,8 +2,12 @@ const { renderFile } = require("ejs");
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-const { getSetOfMeals } = require("../../controllers/mealController");
-const { getFavoritestate } = require("../../controllers/favoriteController");
+const {
+  getSetOfFavorites,
+  getFavoritestate,
+} = require("../../controllers/favoriteController");
+const { getMealById } = require("../../controllers/mealController");
+const { verifyToken } = require("../auth/verifyToken");
 
 const htmlTemplate = path.join(
   __dirname,
@@ -11,15 +15,19 @@ const htmlTemplate = path.join(
   "views/templates/htmlTemplate.ejs"
 );
 
-// Explore recipes page route
-router.get("/explorer", async (req, res, next) => {
+router.get("/favorites", verifyToken, async (req, res, next) => {
   try {
-    const recipes = await getSetOfMeals(1, 20);
+    const userId = req.userId;
+    const favouritsList = await getSetOfFavorites(userId, 1, 20);
+
+    const recipePromises = favouritsList.map((favorite) =>
+      getMealById(favorite.recipe_id)
+    );
+    const recipes = await Promise.all(recipePromises);
 
     if (req.userToken) {
-      const userId = req.userToken;
       const favoritePromises = recipes.map((recipe) =>
-        getFavoritestate(userId, recipe.idMeal)
+        getFavoritestate(req.userToken, recipe.idMeal)
       );
       const favorites = await Promise.all(favoritePromises);
 
@@ -34,13 +42,13 @@ router.get("/explorer", async (req, res, next) => {
     );
 
     return res.render(htmlTemplate, {
-      docTitle: "GR - Explorer",
+      docTitle: "GR - Favorites",
       upperNavBar: true,
       footer: true,
       content: content,
       token: req.userToken,
       CustomCssFiles: ["recipes/explorer.css"],
-      CustomJsFiles: ["recipes/explorer.js", "recipes/search.js"],
+      CustomJsFiles: ["recipes/favorites.js", "recipes/search.js"],
     });
   } catch (error) {
     next(error);

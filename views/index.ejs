@@ -1,9 +1,4 @@
 <section class="content-container">
-    <%# *Não interessa se o utilizador está ou não logado* %>
-
-    <%# Search Bar central, com as principais opções de filtragem %>
-    <%# quando o utilizador carrega no 'enter' é redirecionado para de 'Explore Recipes' %>
-
     <div class="container search-container">
         <div class="d-flex justify-content-center h-100">
             <div class="search">
@@ -13,22 +8,6 @@
         </div>
     </div>
 
-    <script>
-        const searchLocation = "/recipes/explore";
-        const searchInput = $('.search_input');
-        const searchIcon = $('.search_icon');
-
-        searchInput.keypress(function (e) {
-            if (e.key === 'Enter') {
-                window.location.href = searchLocation + '?search=' + encodeURI(searchInput.val());
-            }
-        });
-
-        searchIcon.click(function () {
-            window.location.href = searchLocation + '?search=' + encodeURI(searchInput.val());
-        });
-    </script>
-
     <%# Listar 10/5 Cards em forma de lista random/sugestões horizontal com scroll %>
-    <%- include('recipes/cards/cardsScrollListContainer.ejs', { recipes: recipes }) %>
+    <%- include('recipes/recipesCards/cardsScrollListContainer.ejs', { recipes: recipes }) %>
 </section>
