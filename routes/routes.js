@@ -21,11 +21,8 @@ router.use(require("./recipes/myCollections"));
 router.use(require("./api/validations"));
 router.use(require("./api/recipes"));
 router.use(require("./api/favorite"));
-<<<<<<< HEAD
 router.use(require("./user/profile.js"));
-=======
 router.use(require("./api/collections"));
->>>>>>> c69b9dabc965341348d2a7c944eb0f7dee043384
 
 // Error handling
 router.all("*", (req, res, next) => {

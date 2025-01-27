@@ -2,17 +2,13 @@ const pool = require("../configs/localDataBase");
 const role = 2; // Default role for normal users
 
 const getAllUsers = async () => {
-    await pool.query('SELECT id, name, email, CREATED_AT, UPDATED_AT FROM users', (err, rows, fields) => {
-        if (err) throw err;
-        return rows;
-    });
+    const [rows] = await pool.query('SELECT id, name, email, CREATED_AT, UPDATED_AT FROM users');
+    return rows;
 }
 
 const getUserById = async (id) => {
-    await pool.query('SELECT id, name, email, CREATED_AT, UPDATED_AT FROM users WHERE id = ?', [id], (err, rows, fields) => {
-        if (err) throw err;
-        return rows[0] || null;
-    });
+    const [rows] = await pool.query('SELECT id, name, email, CREATED_AT, UPDATED_AT FROM users WHERE id = ?', [id]);
+    return rows[0] || null;
 }
 
 const getUserByEmail = async (email) => {
@@ -39,19 +35,16 @@ const createUser = async (userData) => {
     }
 }
 
-const updateUser = async (name, email, password, id) => {
-    await pool.query('UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?', [name, email, password, id], (err, rows, fields) => {
-        if (err) throw err;
-        return rows;
-    });
+const updateUserInDb = async (name, email, id) => {
+    const [rows] = await pool.query('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, id]);
+    return rows;
 }
 
 const deleteUser = async (id) => {
-    await pool.query('DELETE FROM users WHERE id = ?', [id], (err, rows, fields) => {
-        if (err) throw err;
-        return rows;
-    });
+    const [rows] = await pool.query('DELETE FROM users WHERE id = ?', [id]);
+    return rows;
 }
+
 const getTotalUsers = async () => {
     const [rows] = await pool.query('SELECT COUNT(*) AS total FROM users');
     return rows[0].total;
@@ -62,4 +55,4 @@ const getFavoriteCategories = async () => {
     return rows.map(row => row.category).join(', ');
 };
 
-module.exports = { getAllUsers, getUserById, getUserByEmail, createUser, updateUser, deleteUser, getTotalUsers, getFavoriteCategories };
+module.exports = { getAllUsers, getUserById, getUserByEmail, createUser, updateUserInDb, deleteUser, getTotalUsers, getFavoriteCategories };
