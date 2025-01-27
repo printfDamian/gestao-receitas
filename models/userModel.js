@@ -43,5 +43,15 @@ const deleteUser = async (id) => {
 		return rows;
 	});
 }
+const getTotalUsers = async () => {
+    const [rows] = await pool.query('SELECT COUNT(*) AS total FROM users');
+    return rows[0].total;
+};
 
-module.exports = { getAllUsers, getUserById, getUserByEmail, createUser, updateUser, deleteUser };
+const getFavoriteCategories = async () => {
+    const [rows] = await pool.query('SELECT category, COUNT(*) AS count FROM user_favorites GROUP BY category ORDER BY count DESC');
+    return rows.map(row => row.category).join(', ');
+};
+
+
+module.exports = { getAllUsers, getUserById, getUserByEmail, createUser, updateUser, deleteUser, getTotalUsers, getFavoriteCategories };
