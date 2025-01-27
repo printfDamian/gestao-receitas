@@ -17,6 +17,17 @@
     <link rel="icon" type="image/x-icon" href="/images/GR-Logo.png">
 </head>
 <body>
+    <% if (upperNavBar) { %>
+        <%- include('../modules/upperNavBar', { token: token }) %>
+    <% } %>
+    
+    <main class="content-container">
+        <%- content %>
+    </main>
+    
+    <% if (footer) { %>
+        <%- include('../modules/footer') %>
+    <% } %>
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
@@ -27,16 +38,5 @@
             <script src="/js/<%- CustomJsFile %>"></script>
         <% }) %>
     <% } %>
-    
-    <% if (upperNavBar) { %>
-        <%- include('../modules/upperNavBar', { token: token }) %>
-    <% } %>
-        
-    <%- content %>
-    
-    <% if (footer) { %>
-        <%- include('../modules/footer') %>
-    <% } %>
-
 </body>
 </html>

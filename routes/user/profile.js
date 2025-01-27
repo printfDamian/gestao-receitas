@@ -1,17 +1,16 @@
 const { renderFile } = require("ejs");
 const express = require("express");
-const router = express.Router();
+const router = express.Router(); 
 const path = require("path");
 const { verifyToken } = require("../auth/verifyToken");
-const { getUserById } = require("../../controllers/userController");
+const { getUserById, updateUser } = require("../../controllers/userController");
 
 const htmlTemplate = path.join(__dirname, "../..", "views/templates/htmlTemplate.ejs");
 
 router.get("/profile", verifyToken, async (req, res, next) => {
     try {
-        const user = await getUserById(req.userId); // Use req.userId
-        console.log("User information");
-        console.log(user);
+        const userId = req.userId;
+        const user = await getUserById(userId);
         const content = await renderFile(path.join(__dirname, "../..", "views/user/userProfile.ejs"), {
             user,
         });
@@ -23,8 +22,19 @@ router.get("/profile", verifyToken, async (req, res, next) => {
             content: content,
             token: req.userToken,
             CustomCssFiles: null,
-            CustomJsFiles: null,
+            CustomJsFiles: ["userProfile.js"], // Include the new JS file
         });
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.post("/profile/update", verifyToken, async (req, res, next) => {
+    try {
+        const userId = req.userId;
+        const { name, email } = req.body;
+        await updateUser(name, email, userId);
+        res.json({ message: "Profile updated successfully" });
     } catch (error) {
         next(error);
     }
