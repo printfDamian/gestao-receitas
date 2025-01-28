@@ -108,6 +108,19 @@
     outline: 1px solid rgb(205, 205, 205);
 }
 
+.collections-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.collection-item {
+    margin-bottom: 10px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
 /* Small */
 @media only screen and (min-width: 576px) {
     .card {

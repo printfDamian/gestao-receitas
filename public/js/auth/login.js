@@ -31,9 +31,12 @@ $(function() {
                         destination = "/" + params.get('destination');
                     }
 
+                    const BASE_URL = window.location.origin;
+
                     setTimeout(() => {
                         window.location.href =
-                        destination
+                        BASE_URL
+                        + destination
                         + '?alert=' 
                         + encodeURI("Login success!")
                         + '&type='

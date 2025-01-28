@@ -12,6 +12,8 @@ const getAllUsers = async () => {
 }
 
 const getUserById = async (id) => {
+    const [rows] = await pool.query('SELECT id, name, email, role, CREATED_AT, UPDATED_AT FROM users WHERE id = ?', [id]);
+    return rows[0] || null;
 	try {
 		const [rows] = await pool.query('SELECT id, name, email, role, CREATED_AT, UPDATED_AT FROM users WHERE id = ?', [id]);
 		return rows[0] || null;
@@ -32,12 +34,12 @@ const getUserByEmail = async (email) => {
 }
 
 const createUser = async (userData) => {
-	const { name, email, password, role } = userData;
-	try {
+    const { name, email, password, role } = userData;
+    try {
 		// Insert the user
 		const [result] = await pool.query(
-			'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)', 
-			[name, email, password, role || 2] // Default to regular user if role not specified
+            'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)', 
+            [name, email, password, role || 2] // Default to regular user if role not specified
 		);
 
 		if (result.affectedRows !== 1) {
@@ -48,10 +50,10 @@ const createUser = async (userData) => {
 		const [rows] = await pool.query(
 			'SELECT id, name, email, role, CREATED_AT, UPDATED_AT FROM users WHERE id = ?',
 			[result.insertId]
-		);
+        );
 
-		return rows[0] || null;
-	} catch (err) {
+        return rows[0] || null;
+    } catch (err) {
 		console.error('Error creating user:', err);
 		throw err;
 	}

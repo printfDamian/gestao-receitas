@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { createUser, getUserByEmail } = require('../models/userModel');
+const { createUser, getUserByEmail, getUserById, updateUserInDb } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const validate = require('../configs/validations');
 const { error } = require('jquery');
@@ -127,4 +127,13 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { register, login };
+const updateUser = async (name, email, userId) => {
+    try {
+        await updateUserInDb(name, email, userId);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+};
+
+module.exports = { register, login, getUserById, updateUser };

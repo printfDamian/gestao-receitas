@@ -18,6 +18,8 @@ router.use("/admin",require("./admin/admin"));
 router.use(require("./api/validations"));
 router.use(require("./api/recipes"));
 router.use(require("./api/favorite"));
+router.use(require("./user/profile.js"));
+router.use(require("./api/collections"));
 
 // Error handling
 router.all("*", (req, res, next) => {

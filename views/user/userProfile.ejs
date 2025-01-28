@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-body" style="padding: 30px; margin: 30px;">
+                    <h1 class="card-title">Profile Information</h1>
+                    <p class="card-text"><strong>Name:</strong> <%= user.name %></p>
+                    <p class="card-text"><strong>Email:</strong> <%= user.email %></p>
+                    <p class="card-text"><strong>Role:</strong> <%= user.role === 1 ? 'Admin' : 'User' %></p>
+                    <p class="card-text"><strong>Date of creation:</strong> <%= user.CREATED_AT %></p>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">Update Profile</button>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body" style="padding: 5px; margin: 5px;">
+                    <h5 class="card-title">Collections</h5>
+                    <p class="card-text"><strong>Number of Collections:</strong> <%= collections.length %></p>
+                    <ul class="list-group">
+                        <% collections.forEach(collection => { %>
+                            <li class="list-group-item"><%= collection.name %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body" style="padding: 30px; margin: 30px;">
+                    <h5 class="card-title">Favorite Recipes</h5>
+                    <ul class="list-group">
+                        <% favorites.forEach(favorite => { %>
+                            <li class="list-group-item"><%= favorite.recipeName %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Profile Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateProfileForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" value="<%= user.name %>">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control d-none" id="email" value="<%= user.email %>" disabled> 
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+.collections-container {
+    padding: 20px 0;
+}
+
+.collection-section {
+    position: relative;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    margin-bottom: 20px;
+}
+
+.collection-title {
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.cardContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.recipe-card {
+    position: relative;
+    margin-bottom: 20px;
+    transition: opacity 0.4s ease;
+}
+
+.remove-recipe {
+    position: absolute;
+    top: 10px;
+    left: 45%;
+    transform: translateX(-50%);
+    display: none;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.recipe-card:hover .remove-recipe {
+    display: block;
+    opacity: 1;
+}
+
+.btn-group {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.add-collection {
+    border: 1px solid black;
+    font-size: 2em;
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 30px;
+}
