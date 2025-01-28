@@ -41,7 +41,7 @@ console.log("asasdsadasdadsaadsasd: ", req.userRole);
       token: req.userToken,
       role: req.userRole,
       CustomCssFiles: ["recipes/explorer.css"],
-      CustomJsFiles: ["recipes/explorer.js", "recipes/search.js"],
+      CustomJsFiles: ["apiRecipesFunc/explorer.js", "recipes/search.js", "recipes/favorite.js", "recipes/collection.js"],
     });
   } catch (error) {
     next(error);

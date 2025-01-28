@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { createUser, getUserByEmail, getUserById, updateUserInDb } = require('../models/userModel');
+const { createUser, getUserByEmail, getUserById, updateUserWithoutPassword } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const validate = require('../configs/validations');
-const { error } = require('jquery');
 const JWT_SECRET = process.env.SECRETKEY;
 
 function validateCredentials(name, email, password, isLogin = false) {
@@ -129,7 +128,7 @@ const login = async (req, res) => {
 
 const updateUser = async (name, email, userId) => {
     try {
-        await updateUserInDb(name, email, userId);
+        await updateUserWithoutPassword(name, email, null, userId);
     } catch (err) {
         console.log(err);
         throw err;

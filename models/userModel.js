@@ -74,10 +74,20 @@ const updateUser = async (name, email, password, role, id) => {
 
 const updateUserWithoutPassword = async (name, email, role, id) => {
     try {
-        const [rows] = await pool.query(
-            'UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?', 
-            [name, email, role, id]
-        );
+        let rows;
+        
+        if(role) {
+            [rows] = await pool.query(
+                'UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?', 
+                [name, email, role, id]
+            );
+        } else {
+            [rows] = await pool.query(
+                'UPDATE users SET name = ?, email = ? WHERE id = ?', 
+                [name, email, id]
+            );
+        }
+        
         return rows;
     } catch (err) {
         console.error('Error updating user:', err);
