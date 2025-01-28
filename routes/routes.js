@@ -13,6 +13,7 @@ router.use(require("./auth/login"));
 router.use(require("./recipes/explorer"));
 router.use(require("./recipes/recipeDetails"));
 router.use(require("./recipes/favorites"));
+router.use(require("./recipes/myCollections"));
 router.use("/admin",require("./admin/admin")); 
 
 router.use(require("./api/validations"));

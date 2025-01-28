@@ -37,6 +37,7 @@ router.get("/myCollections", verifyToken, async (req, res, next) => {
             footer: true,
             content: content,
             token: req.userToken,
+            role: req.userRole,
             CustomCssFiles: ["recipes/collection.css"],
             CustomJsFiles: ["recipes/collection.js", "recipes/favorite.js"],
         });
