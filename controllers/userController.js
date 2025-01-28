@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-const { createUser, getUserByEmail, getUserById, updateUserInDb } = require('../models/userModel');
+const { createUser, getUserByEmail, getUserById, updateUserWithoutPassword } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const validate = require('../configs/validations');
 const JWT_SECRET = process.env.SECRETKEY;
 
-function validateCredentials(name, email, password) {
+function validateCredentials(name, email, password, isLogin = false) {
     if (name) {
         if (!name || !email || !password) {
             return 'All fields are required';
@@ -19,7 +19,8 @@ function validateCredentials(name, email, password) {
         return validate.emailRegex().description;
     }
 
-    if (!validate.password(password)) {
+    // Skip password validation for login
+    if (!isLogin && !validate.password(password)) {
         return validate.passwordRegex().description;
     }
 
@@ -34,7 +35,7 @@ const register = async (req, res) => {
         email = email.trim();
         password = password.trim();
         
-        const error = validateCredentials(name, email, password)
+        const error = validateCredentials(name, email, password, false)
         if (error) return res.status(400).json({ error: error });
     
         const user = await getUserByEmail(email);
@@ -55,7 +56,7 @@ const register = async (req, res) => {
         }
 
         const token = jwt.sign(
-            { userId: newUser.insertId, email: email },
+            { userId: newUser.id, email: newUser.email, role: newUser.role },
             JWT_SECRET,
             { expiresIn: expires }
         );
@@ -63,7 +64,7 @@ const register = async (req, res) => {
         return res.status(201).json({
             message: 'User registered successfully',
             token,
-            userId: newUser.insertId
+            userId: newUser.id
         });
 
     } catch (error) {
@@ -79,15 +80,24 @@ const login = async (req, res) => {
         email = email.trim();
         password = password.trim();
 
-        const error = validateCredentials(null, email, password)
+        console.log('Attempting login for email:', email);
+
+        const error = validateCredentials(null, email, password, true)
         if (error) return res.status(400).json({ error: error });
 
         const user = await getUserByEmail(email);
         if (!user) {
+            console.log('User not found for email:', email);
             return res.status(404).send({ error: 'User not found' });
         }
 
-        if (!bcrypt.compareSync(password, user.password)) {
+        console.log('User found:', { id: user.id, email: user.email, role: user.role });
+        
+        const passwordMatch = bcrypt.compareSync(password, user.password);
+        console.log('Password comparison result:', passwordMatch);
+        
+        if (!passwordMatch) {
+            console.log('Password mismatch for user:', email);
             return res.status(401).send({ error: 'Wrong password' });
         }
 
@@ -97,28 +107,28 @@ const login = async (req, res) => {
         }
 
         const token = jwt.sign(
-            { userId: user.id, email: user.email },
+            { userId: user.id, email: user.email, role: user.role },
             JWT_SECRET,
             { expiresIn: expires }
         );
         
         res.cookie('loginToken', token, {signed: true});
-
         return res.status(201).json({
             message: 'Logged in successfully',
             token,
-            userId: user.id
+            userId: user.id,
+            role: user.role
         });
 
     } catch (err) {
-        res.send({ error: 'Login failed' });
-        console.log(err);
+        console.error('Login error:', err);
+        res.status(500).send({ error: 'Login failed' });
     }
 };
 
 const updateUser = async (name, email, userId) => {
     try {
-        await updateUserInDb(name, email, userId);
+        await updateUserWithoutPassword(name, email, null, userId);
     } catch (err) {
         console.log(err);
         throw err;

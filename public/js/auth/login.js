@@ -1,5 +1,4 @@
 let formElements;
-var passwordRegex, passwordDesc;
 
 $(function() {
     formElements = {
@@ -9,17 +8,10 @@ $(function() {
         remember: $('#autoSizingCheck2')
     };
 
-    formElements.password.on('focusout', function() {
-        if($(this).val() === '') return;
-        validatePassword($(this).val());
-    });
-
     formElements.form.on('submit', async function(e) {
         e.preventDefault();
 
         const url = $(this).attr('action');
-
-        if(!await validatePassword(formElements.password.val())) return;
 
         $.ajax({
             type: 'POST',
@@ -51,41 +43,15 @@ $(function() {
                         + encodeURI("success");
                     }, 1500);
                 } else {
-                    showAlert(response, "danger");
+                    showAlert(data.error, "danger");
                 }
             },
             error: function(err) {
                 if (!err) return;
                 console.error(err);
-                const errorMessage = err.responseJSON?.error || 'Registration failed. Please try again.';
+                const errorMessage = err.responseJSON?.error || 'Login failed. Please try again.';
                 showAlert(errorMessage, "danger");
             }
         });
     });
 });
-
-function getRegex() {
-    if(passwordRegex) return;
-    return $.ajax({
-        type: 'GET',
-        url: '/api/validations',
-        success: function(response) {
-            passwordDesc = response.password.description;
-            passwordRegex = new RegExp(response.password.regexStr);
-        },
-        error: function(error) {
-            console.error(error);
-            showAlert(error.responseJSON.error, "danger");
-        }
-    });
-}
-
-async function validatePassword(psw) {
-    await getRegex();
-    if(!passwordRegex.test(psw)) {
-        showAlert(passwordDesc, "warning");
-        return false;
-    } else {
-        return true;
-    }
-}

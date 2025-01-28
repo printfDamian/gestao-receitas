@@ -28,23 +28,24 @@ router.get("/explorer", async (req, res, next) => {
 			});
 		}
 
-		const content = await renderFile(
-			path.join(__dirname, "../..", "views/recipes/explorer.ejs"),
-			{ recipes }
-		);
-
-		return res.render(htmlTemplate, {
-			docTitle: "GR - Explorer",
-			upperNavBar: true,
-			footer: true,
-			content: content,
-			token: req.userToken,
-			CustomCssFiles: ["recipes/explorer.css"],
-			CustomJsFiles: ["apiRecipesFunc/explorer.js", "recipes/search.js", "recipes/favorite.js", "recipes/collection.js"],
-		});
-	} catch (error) {
-		next(error);
-	}
+    const content = await renderFile(
+      path.join(__dirname, "../..", "views/recipes/explorer.ejs"),
+      { recipes }
+    );
+console.log("asasdsadasdadsaadsasd: ", req.userRole);
+    return res.render(htmlTemplate, {
+      docTitle: "GR - Explorer",
+      upperNavBar: true,
+      footer: true,
+      content: content,
+      token: req.userToken,
+      role: req.userRole,
+      CustomCssFiles: ["recipes/explorer.css"],
+      CustomJsFiles: ["apiRecipesFunc/explorer.js", "recipes/search.js", "recipes/favorite.js", "recipes/collection.js"],
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
